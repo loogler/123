@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="5dp"
+    android:background="@color/white"
+    android:orientation="vertical" >
+    <TextView 
+        android:id="@+id/nicknameText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:text="收件人：会员昵称"/>
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:text="标题："/>
+        <EditText 
+            android:id="@+id/titleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="不超过20字"
+            android:maxLength="20"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+        <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:layout_alignParentTop="true"	
+            android:text="内容："/>
+        <EditText 
+            android:id="@+id/contentText"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:hint="不超过200字"
+            android:gravity="top"
+            android:maxLength="200"/>
+    </LinearLayout>
+</LinearLayout>
+

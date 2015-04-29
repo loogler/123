@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- 可以下拉的区域 -->
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/sroll_1"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="100dp" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <ImageView
+                android:id="@+id/img"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/tabmyself_back" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/img"
+                android:orientation="horizontal"
+                android:background="@color/gray2"
+                android:padding="5dp" >
+
+                <ImageView
+                    android:layout_width="90px"
+                    android:layout_height="110px"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/ic_launcher"
+                    android:id="@+id/user_img" 
+                    android:contentDescription="@id/user_img"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="infomation"
+                    android:textColor="@color/white"
+                    android:id="@+id/user_info" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:layout_marginTop="10dip"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:id="@+id/relayout_hyfu"
+                android:layout_width="fill_parent"
+                android:layout_height="45dip"
+                android:background="@drawable/tabmyself_top"
+                android:clickable="true"
+                android:gravity="center_vertical" >
+
+                <ImageView
+                    android:id="@+id/iamg_hyfw"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dip"
+                    android:src="@drawable/icon_my_hyfw" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dip"
+                    android:layout_toRightOf="@+id/iamg_hyfw"
+                    android:paddingLeft="20dip"
+                    android:text="会员服务" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dip"
+                    android:src="@drawable/rightarrow" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relayout_wdqianbao"
+                android:layout_width="fill_parent"
+                android:layout_height="45dip"
+                android:layout_marginTop="1dip"
+                android:background="@drawable/tabmyself_bottom"
+                android:clickable="true"
+                android:gravity="center_vertical" >
+
+                <ImageView
+                    android:id="@+id/iamg_wdqb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dip"
+                    android:src="@drawable/icon_my_wdqb" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dip"
+                    android:layout_toRightOf="@+id/iamg_wdqb"
+                    android:paddingLeft="20dip"
+                    android:text="我的钱包" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dip"
+                    android:src="@drawable/rightarrow" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relayout_xgzl"
+                android:layout_width="fill_parent"
+                android:layout_height="45dip"
+                android:layout_marginTop="20dip"
+                android:background="@drawable/tabmyself_top"
+                android:clickable="true"
+                android:gravity="center_vertical" >
+
+                <ImageView
+                    android:id="@+id/iamg_xgzl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dip"
+                    android:src="@drawable/icon_my_xgzl" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dip"
+                    android:layout_toRightOf="@+id/iamg_xgzl"
+                    android:paddingLeft="20dip"
+                    android:text="修改资料" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dip"
+                    android:src="@drawable/rightarrow" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/relayout_ylzl"
+                android:layout_width="fill_parent"
+                android:layout_height="45dip"
+                android:layout_marginTop="1dip"
+                android:background="@drawable/tabmyself_middle"
+                android:clickable="true"
+                android:gravity="center_vertical" >
+
+                <ImageView
+                    android:id="@+id/iamg_ylzl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dip"
+                    android:src="@drawable/icon_my_xqah" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dip"
+                    android:layout_toRightOf="@+id/iamg_ylzl"
+                    android:paddingLeft="20dip"
+                    android:text="预览资料" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dip"
+                    android:src="@drawable/rightarrow" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relayout_zotj"
+                android:layout_width="fill_parent"
+                android:layout_height="45dip"
+                android:layout_marginTop="1dip"
+                android:background="@drawable/tabmyself_middle"
+                android:clickable="true"
+                android:gravity="center_vertical" >
+
+                <ImageView
+                    android:id="@+id/iamg_xqah"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dip"
+                    android:src="@drawable/icon_my_xqah" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dip"
+                    android:layout_toRightOf="@+id/iamg_xqah"
+                    android:paddingLeft="20dip"
+                    android:text="择偶条件" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dip"
+                    android:src="@drawable/rightarrow" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relayout_nxdb"
+                android:layout_width="fill_parent"
+                android:layout_height="45dip"
+                android:layout_marginTop="1dip"
+                android:background="@drawable/tabmyself_bottom"
+                android:clickable="true"
+                android:gravity="center_vertical" >
+
+                <ImageView
+                    android:id="@+id/iamg_shzt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dip"
+                    android:src="@drawable/icon_my_shzt" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dip"
+                    android:layout_toRightOf="@+id/iamg_shzt"
+                    android:paddingLeft="20dip"
+                    android:text="内心独白" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dip"
+                    android:src="@drawable/rightarrow" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relayout_zxdl"
+                android:layout_width="fill_parent"
+                android:layout_height="45dip"
+                android:layout_marginTop="20dip"
+                android:background="@drawable/tabmyself_alone"
+                android:clickable="true"
+                android:gravity="center_vertical" >
+
+                <ImageView
+                    android:id="@+id/iamg_zxdl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dip"
+                    android:layout_marginTop="3dip"
+                    android:src="@drawable/icon_my_tcdl" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dip"
+                    android:layout_toRightOf="@+id/iamg_zxdl"
+                    android:paddingLeft="20dip"
+                    android:text="注销" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dip"
+                    android:src="@drawable/rightarrow" />
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>

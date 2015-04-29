@@ -1,0 +1,65 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.qingyuan.MainActivity" >
+       <android.support.v4.view.ViewPager
+        android:id="@+id/vPager"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center"
+        android:paddingBottom="55dip"
+        android:persistentDrawingCache="animation" />
+
+    <RadioGroup
+        android:id="@+id/radiogroup"
+        android:layout_width="match_parent"
+        android:layout_height="60sp"
+        android:layout_alignParentBottom="true"
+        android:background="#AAAAAA"
+        android:orientation="horizontal" >
+<!-- android:background 必须有 就算没有内容也必须写，否则drawable无法居中～！！！ -->
+        <RadioButton
+            android:id="@+id/recommend"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:checked="true"
+            android:background="@drawable/activity_main_radiobutton"
+            android:drawableTop="@drawable/recommend"
+            android:gravity="center" />
+
+        <RadioButton
+            android:id="@+id/news"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:background="@drawable/activity_main_radiobutton"
+            android:drawableTop="@drawable/news"
+            android:gravity="center" />
+
+        <RadioButton
+            android:id="@+id/others"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:background="@drawable/activity_main_radiobutton"
+            android:drawableTop="@drawable/others"
+            android:gravity="center" />
+
+        <RadioButton
+            android:id="@+id/myself"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:background="@drawable/activity_main_radiobutton"
+            android:drawableTop="@drawable/myself"
+            android:gravity="center" />
+    </RadioGroup>
+
+</RelativeLayout>

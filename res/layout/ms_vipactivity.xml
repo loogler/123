@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+        <RelativeLayout
+            android:id="@+id/relative"
+            android:layout_width="fill_parent"
+            android:layout_height="60dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:background="@color/red1" >
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="开通会员"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/white"
+                android:textSize="24sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/vip_relayout_gaoji"
+            android:layout_width="fill_parent"
+            android:layout_height="60dip"
+            android:layout_marginTop="1dip"
+            android:background="@drawable/ms_vip_starback"
+            android:clickable="true"
+            android:gravity="center_vertical" >
+
+            <ImageView
+                android:id="@+id/vip_iamg_gaoji"
+                android:layout_width="40dip	"
+                android:layout_height="40dip"
+                android:layout_marginLeft="10dip"
+                android:src="@drawable/ms_vip_advance" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/vip_iamg_gaoji"
+                android:orientation="vertical"
+                android:paddingLeft="20dip" >
+
+                <TextView
+                    android:id="@+id/txt_vip_gj_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dip"
+                    android:text="高级会员"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txt_vip_gj_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dip"
+                    android:text="2299/3个月高级会员服务"
+                    android:textSize="14sp" />
+
+                
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/image_vip_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="30dip"
+                android:layout_marginTop="30dip"
+                android:src="@drawable/ms_vip_img" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/vip_relayout_zuanshi"
+            android:layout_width="fill_parent"
+            android:layout_height="60dip"
+            android:layout_marginTop="1dip"
+            android:background="@drawable/ms_vip_starback"
+            android:clickable="true"
+            android:gravity="center_vertical" >
+
+            <ImageView
+                android:id="@+id/vip_iamg_zuanshi"
+                android:layout_width="40dip	"
+                android:layout_height="40dip"
+                android:layout_marginLeft="10dip"
+                android:src="@drawable/ms_vip_dimond" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/vip_iamg_zuanshi"
+                android:orientation="vertical"
+                android:paddingLeft="20dip" >
+
+                <TextView
+                    android:id="@+id/txt_vip_zs_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dip"
+                    android:text="钻石会员"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txt_vip_zs_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dip"
+                    android:text="3699/6个月钻石会员服务"
+                    android:textSize="14sp" />
+
+              
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/image_vip_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="30dip"
+                android:layout_marginTop="30dip"
+                android:src="@drawable/ms_vip_img" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/vip_relayout_chengshi"
+            android:layout_width="fill_parent"
+            android:layout_height="60dip"
+            android:layout_marginTop="1dip"
+            android:background="@drawable/ms_vip_starback"
+            android:clickable="true"
+            android:gravity="center_vertical" >
+
+            <ImageView
+                android:id="@+id/vip_iamg_chengshi"
+                android:layout_width="40dip	"
+                android:layout_height="40dip"
+                android:layout_marginLeft="10dip"
+                android:src="@drawable/ms_vip_star" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/vip_iamg_chengshi"
+                android:orientation="vertical"
+                android:paddingLeft="20dip" >
+
+                <TextView
+                    android:id="@+id/txt_vip_cs_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dip"
+                    android:text="城市之星"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txt_vip_cs_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dip"
+                    android:text="1399/1个月城市闪耀之星"
+                    android:textSize="14sp" />
+
+            
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/image_vip_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="30dip"
+                android:layout_marginTop="30dip"
+                android:src="@drawable/ms_vip_img" />
+        </RelativeLayout>
+        
+        <Button 
+            android:id="@+id/btn_vip_openvip"
+            android:layout_width="fill_parent"
+            android:layout_height="40dip"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:layout_marginTop="20dip"
+            android:background="@drawable/ms_vip_button"
+            android:text="开通会员"/>
+        <ScrollView 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="30dip"
+            android:id="@+id/detail"
+            
+            >
+            <LinearLayout 
+                android:layout_width="match_parent"
+            	android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+<!-- 高级会员介绍 -->
+            <LinearLayout 
+                android:layout_width="match_parent"
+            	android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/gaoji"
+                android:visibility="gone"
+                >
+                <TextView 
+                    android:layout_width="match_parent"
+            		android:layout_height="wrap_content"
+            		android:text="高级会员服务介绍："
+            		android:textSize="16sp"
+            		
+                    />
+                <TextView 
+                    android:layout_width="match_parent"
+            		android:layout_height="wrap_content"
+            		android:text="1 3个月满意服务促成美好相恋"
+            		android:textSize="12sp"
+            		android:textColor="@color/grey"
+                    />
+                <TextView 
+                    android:layout_width="match_parent"
+            		android:layout_height="wrap_content"
+            		android:text="2 显要的位置排名，凸显尊贵身份"
+            		android:textSize="12sp"
+            		android:textColor="@color/grey"
+                    />
+                <TextView 
+                    android:layout_width="match_parent"
+            		android:layout_height="wrap_content"
+            		android:text="3 红娘一对一全程跟踪指导，排除后顾之忧"
+            		android:textSize="12sp"
+            		android:textColor="@color/grey"
+                    />
+                <TextView 
+                    android:layout_width="match_parent"
+            		android:layout_height="wrap_content"
+            		android:text="4 星座、生肖专家提供权威帮助"
+            		android:textSize="12sp"
+            		android:textColor="@color/grey"
+                    />
+                <TextView 
+                    android:layout_width="match_parent"
+            		android:layout_height="wrap_content"
+            		android:text="5 多层面立体化的沟通方式，快速增进了解"
+            		android:textSize="12sp"
+            		android:textColor="@color/grey"
+                    />
+               
+            </LinearLayout>
+<!-- 钻石会员介绍 -->
+            <LinearLayout 
+                android:layout_width="match_parent"
+            	android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/zuanshi"
+                android:visibility="gone"
+                >
+                <TextView 
+                    android:layout_width="match_parent"
+            		android:layout_height="wrap_content"
+            		android:text="钻石会员服务介绍："
+            		android:textSize="16sp"
+            		
+                    />
+                <TextView 
+                    android:layout_width="match_parent"
+            		android:layout_height="wrap_content"
+            		android:text="1 专案 ：深入解析，定制方案"
+            		android:textSize="12sp"
+            		android:textColor="@color/grey"
+                    />
+                <TextView 
+                    android:layout_width="match_parent"
+            		android:layout_height="wrap_content"
+            		android:text="2 筛选：精挑细选，推荐对象"
+            		android:textSize="12sp"
+            		android:textColor="@color/grey"
+                    />
+                <TextView 
+                    android:layout_width="match_parent"
+            		android:layout_height="wrap_content"
+            		android:text="3 牵线：推荐特点，为您牵线传情"
+            		android:textSize="12sp"
+            		android:textColor="@color/grey"
+                    />
+                <TextView 
+                    android:layout_width="match_parent"
+            		android:layout_height="wrap_content"
+            		android:text="4 约见:专业指导，积极促成约会"
+            		android:textSize="12sp"
+            		android:textColor="@color/grey"
+                    />
+                <TextView 
+                    android:layout_width="match_parent"
+            		android:layout_height="wrap_content"
+            		android:text="5 撮合：推进交往，全程保驾护航"
+            		android:textSize="12sp"
+            		android:textColor="@color/grey"
+                    />
+                
+            </LinearLayout>
+            <!-- 城市之星介绍 -->
+            <LinearLayout 
+                android:layout_width="match_parent"
+            	android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/chengshi"
+                android:visibility="gone"
+                >
+                <TextView 
+                    android:layout_width="match_parent"
+            		android:layout_height="wrap_content"
+            		android:text="城市之星服务介绍："
+            		android:textSize="16sp"
+            		
+                    />
+                
+                <TextView 
+                    android:layout_width="match_parent"
+            		android:layout_height="wrap_content"
+            		android:text="1 首页鲜明展示让你脱颖而出"
+            		android:textSize="12sp"
+            		android:textColor="@color/grey"
+                    />
+                <TextView 
+                    android:layout_width="match_parent"
+            		android:layout_height="wrap_content"
+            		android:text="2 资料搜索优先显示让您人气值倍增"
+            		android:textSize="12sp"
+            		android:textColor="@color/grey"
+                    />
+                <TextView 
+                    android:layout_width="match_parent"
+            		android:layout_height="wrap_content"
+            		android:text="3 鲜明的图标让您诚信度大大提高"
+            		android:textSize="12sp"
+            		android:textColor="@color/grey"
+                    />
+                <TextView 
+                    android:layout_width="match_parent"
+            		android:layout_height="wrap_content"
+            		android:text="4 享有优先推荐权让您得到更多关注"
+            		android:textSize="12sp"
+            		android:textColor="@color/grey"
+                    />
+                <TextView 
+                    android:layout_width="match_parent"
+            		android:layout_height="wrap_content"
+            		android:text="5 更加完善的服务让您高枕无忧"
+            		android:textSize="12sp"
+            		android:textColor="@color/grey"
+                    />
+                
+            </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+        
+        
+</LinearLayout>

@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/LinearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/red1"
+        android:gravity="center" >
+
+        <TextView
+            android:id="@+id/username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="会员的个人中心"
+            android:textColor="@color/white"
+            android:textSize="24sp" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/LinearLayout1" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:id="@+id/user_photo"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.99"
+                    android:src="@drawable/ic_launcher" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingLeft="10dp" >
+
+                    <TextView
+                        android:id="@+id/nickname"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="nickname"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/place_gender_age"
+                        android:layout_width="164dp"
+                        android:layout_height="wrap_content"
+                        android:text="city_gender_age" />
+
+                    <TextView
+                        android:id="@+id/height"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="height"
+                        android:textSize="16dp" />
+
+                    <TextView
+                        android:id="@+id/school"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="education"
+                        android:textSize="16dp" />
+
+                    <TextView
+                        android:id="@+id/occupation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="occupation"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/love_state"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="love_state"
+                        android:textSize="16sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal" >
+
+                        <!-- 认证图标 -->
+
+                        <TextView
+                            android:id="@+id/identity_check"
+                            android:layout_width="wrap_content"
+                            android:layout_height="20dp"
+                            android:layout_marginRight="10dp" />
+
+                        <TextView
+                            android:id="@+id/email_check"
+                            android:layout_width="wrap_content"
+                            android:layout_height="20dp"
+                            android:layout_marginRight="10dp" />
+
+                        <TextView
+                            android:id="@+id/tel_check"
+                            android:layout_width="wrap_content"
+                            android:layout_height="20dp"
+                            android:layout_marginRight="10dp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+            
+            <LinearLayout 
+                android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                >
+                <HorizontalScrollView
+                    android:id="@+id/horizontalScrollView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <LinearLayout
+                        android:id="@+id/photos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal" >
+                    </LinearLayout>
+                </HorizontalScrollView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        style="@style/border_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="内心独白"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="introduce_data"
+                        android:id="@+id/introduce" />
+                </LinearLayout>
+                <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="40dip"
+            android:background="@color/red3"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+                <LinearLayout
+                    android:id="@+id/detail_data"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dip"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#ffffff"
+                        android:text="详细资料" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/condition_data"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dip"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:orientation="horizontal"
+                    android:gravity="center" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#ffffff"
+                        android:text="择偶条件" />
+                </LinearLayout>       
+        </LinearLayout>
+                
+            </LinearLayout>
+            <FrameLayout
+            android:id="@+id/framelayout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" >
+        </FrameLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

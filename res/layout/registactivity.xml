@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+        <LinearLayout
+                android:id="@id/relative"
+                android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="28.0dip"
+                android:layout_marginRight="28.0dip"
+                android:layout_marginTop="8dp"
+                android:clickable="false"
+                 >
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="0dip"
+                    android:layout_height="fill_parent"
+
+                    android:layout_weight="1"
+                    android:gravity="center|left"
+                    android:text="性别："
+                    android:textSize="16sp" />
+
+                <RadioGroup
+                    android:layout_width="0dip"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="3"
+                    android:gravity="center"
+                    android:orientation="horizontal" >
+
+                    <RadioButton
+                        android:id="@+id/radioButton_boy"
+                        android:layout_width="0dip"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1"
+                        android:checked="true"
+                        android:text="男" />
+
+                    <RadioButton
+                        android:id="@+id/radioButton_girl"
+                        android:layout_width="0dip"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1"
+                        android:text="女" />
+                </RadioGroup>
+            </LinearLayout>
+        <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="28.0dip"
+                android:layout_marginRight="28.0dip" >
+
+                <TextView
+                    android:id="@+id/textView1"
+                    android:layout_width="0dip"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="2"
+                    android:gravity="center|left"
+                    android:text="地区："
+                    android:textSize="16sp" />
+
+                <Spinner
+                    android:id="@+id/spinner_province"
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="3"
+                    android:textColor="#ff1d1d1d" />
+
+                <Spinner
+                    android:id="@+id/spinner_city"
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="3"
+                    android:textColor="#ff1d1d1d" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="28.0dip"
+                android:layout_marginRight="28.0dip"
+                 >
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="0dip"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:gravity="center|left"
+                    android:text="生日："
+                    android:textSize="16sp" />
+
+                <com.qingyuan.service.parser.MyDateSpinner
+                    android:id="@+id/datespinner1"
+                    android:layout_width="0dip"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="3" />
+            </LinearLayout>
+        
+        
+        <!--四个文本框用来填写邮箱、手机、密码以及确认密码-->
+        
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="28sp"
+        android:layout_marginRight="28sp"
+        android:background="@drawable/registactivity_edit"
+         >
+    <EditText
+        android:id="@+id/set_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:hint="请填写您的常用邮箱"
+        android:inputType="textEmailAddress"
+        android:textColor="#ff1d1d1d"    
+        android:textSize="16sp"    
+        android:autoLink="email" />
+    <EditText
+        android:id="@+id/set_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/editText"
+        android:maxLength="11"
+        android:hint="请填写您的手机号码"
+        android:textColor="#ff1d1d1d"
+        android:textSize="16sp"
+        android:inputType="phone" />
+    <EditText
+        android:id="@+id/set_password"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:inputType="textPassword"
+        android:maxLength="16"
+        android:maxLines="1"
+        android:textColor="#ff1d1d1d"
+        android:hint="请设置密码"
+        android:textSize="16.0sp"
+        android:textIsSelectable="false"
+        android:layout_below="@+id/editText"/>
+    <EditText
+        android:id="@+id/set_password_again"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:inputType="textPassword"
+        android:maxLength="16"
+        android:maxLines="1"
+        android:textColor="#ff1d1d1d"
+
+        android:hint="请再次确认密码"
+        android:textSize="16.0sp"
+        android:textIsSelectable="false"
+        android:layout_below="@+id/editText"/>
+    
+    </LinearLayout>    
+    
+    <!--确认已阅读并同意《情缘服务条款》-->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="已经阅读并同意"
+            android:id="@+id/agreement_read"
+            android:layout_marginLeft="28dp"
+            android:textSize="16dp" />
+        <!--命名规范：textView_agreement_enter-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="情缘服务条款"
+            android:id="@+id/textView_agreement_enter"
+            android:textSize="16dp"
+            android:textColor="#F84976"
+            android:clickable="true" 
+            android:focusable="true"/>
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="28dp"
+        android:layout_marginRight="28dp"
+        android:weightSum="1">
+    <!--命名规范：button_home_enter_2-->
+    <Button android:id="@+id/button_home_enter_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:paddingLeft="28.0dip"
+        android:paddingRight="28.0dip"
+        android:text="注册"
+        android:textColor="#ffffff"
+        android:textStyle="bold"
+        android:maxLines="1"
+        android:textSize="20.0sp"
+        android:background="@drawable/registactivity_registbtn" />
+    </LinearLayout>
+        
+    </LinearLayout>
+    
+
+</ScrollView>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="white">#FFFFFF</color>
+    <color name="red">#D73C90</color>
+    <color name="red1">#56081C</color>
+    <color name="red_radio">#A11035</color>
+    <color name="red2">#ff0033</color>
+    <color name="red3">#B95b5B</color>
+    <color name="red4">#FF0000</color>
+    <color name="blue">#0000FF</color>
+    <color name="grey">#666666</color>
+    <color name="black">#000000</color>
+    <color name="transparent">#00000000</color>
+    <color name="lightwhite">#EAE8E9</color>
+    <color name="frenchgrey">#D1D1D1</color>
+    <color name="red5">#663333</color>
+    <color name="yellow">#ffcc00</color>
+    <color name="yellow_back">#FFEDBB</color>
+    <color name="yellow_test">#A25B00</color>
+    <color name="news_list_black">#333333</color>
+    <color name="news_list_time">#969696</color>
+    <color name="news_test">#5e5e5e</color>
+    <color name="third_color">#C9C9C9</color>
+    <color name="light_red">#ff3300</color>
+    <color name="green">#04c004</color>
+    <color name="choice_house_press">#86d3ef</color>
+    <color name="gold">#ffd700</color>
+    <color name="orange">#ffa500</color>
+    <color name="brown">#a52a2a</color>
+    <color name="deepskyblue">#00bfff</color>
+    <color name="darkblue">#00008b</color>
+    <color name="gray">#ffe7e7e7</color>
+    <color name="light_gray">#EFEFEF</color>
+    <color name="light_lanse">#33ffff</color>
+    <!-- 深灰色 -->
+    <color name="gray1">#5c615d</color>
+    <!-- 灰色 -->
+    <color name="gray2">#949393</color>
+    <!-- 淡灰色 -->
+    <color name="gray3">#CCCCCC</color>
+    <!-- 淡淡灰色 -->
+    <color name="gray4">#e5e5e5</color>
+    <color name="bg_app">#efefef</color>
+    <color name="bg_actionbar">#52c83b</color>
+    <color name="actionbar_selected">#298a24</color>
+    <color name="item_checked">#202020</color>
+    <color name="item_text_checked">#d4bc7c</color>
+    <color name="list_divider">#595959</color>
+    <color name="bg_left_tabs">#3d3d3d</color>
+    <color name="dialog_title_divider">#efefef</color>
+    <color name="text_default">#B4B4B4</color>
+    <color name="light_yellow">#fffae2</color>
+    <color name="more_footer_text_color">#33cccc</color>
+    <color name="more_footer_text_color1">#f3f3f3</color>
+
+</resources>

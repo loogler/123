@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--显示搜索结果-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <LinearLayout 
+        android:id="@+id/imageView1"
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        android:background="@color/red1">
+        <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="请选择鲜花"
+            android:textSize="24sp"/>
+    </LinearLayout>
+    
+    <com.qingyuan.util.pulldown.PullDownView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/pull_down_view"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/imageView1"
+        android:background="@android:color/white" />
+
+    <LinearLayout
+        android:id="@+id/LinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal"
+        android:layout_marginLeft="10.0dip"
+        android:layout_marginRight="10.0dip" >
+
+    </LinearLayout>
+</RelativeLayout>

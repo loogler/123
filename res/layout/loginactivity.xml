@@ -1,0 +1,127 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="LoginActivity"
+    android:background="@drawable/login_back" >
+	<!--这是登录界面-->
+	<!--网站logo-->
+    <ImageView
+        android:id="@+id/loginbutton"
+        android:layout_width="fill_parent"
+        android:layout_height="110dp"
+        android:gravity="center"
+        android:src="@drawable/ic_launcher"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="28dp"
+    	android:layout_marginLeft="28dp"
+    	android:layout_marginRight="28dp"
+        android:layout_weight="1"/>
+	<!--登录名和密码的纵向线性布局-->
+    <LinearLayout
+    android:id="@+id/input"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_below="@+id/loginbutton"
+    android:layout_centerHorizontal="true"
+    android:layout_marginTop="28dp"
+    android:layout_marginLeft="35dp"
+    android:layout_marginRight="35dp"
+    >
+    <EditText
+        android:id="@+id/login_name"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:imeOptions="actionDone"
+        android:textColor="#ff1d1d1d"
+        android:textColorHint="#ff666666"
+        android:hint="邮箱/手机/昵称"
+        android:singleLine="true"
+        android:textSize="18sp"
+        />
+    <EditText
+        android:id="@+id/login_password"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:inputType="textPassword"
+        android:maxLength="16"
+        android:maxLines="1"
+        android:textColor="#ff1d1d1d"
+        android:textColorHint="#ff666666"
+        android:hint="请输入密码"
+        android:textSize="18.0sp"
+        android:textIsSelectable="false"
+        android:layout_below="@+id/editText"/>
+	</LinearLayout>
+	<!--登录按钮-->
+	<!--命名规范：button_home_enter_1-->
+    <Button
+        android:id="@+id/button_home_enter_1"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_marginTop="32.0dip"
+        android:layout_marginLeft="8sp"
+        android:layout_marginRight="8sp"
+        android:layout_below="@+id/input"
+        android:gravity="center"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:background="#FF4500"
+        android:text="登    录"
+        android:layout_alignRight="@+id/relative"
+        android:layout_alignEnd="@+id/relative"
+        android:layout_alignLeft="@+id/relative"
+        android:layout_alignStart="@+id/relative"
+        
+        />
+
+
+	<!--“自动登录”和“一键注册”的线性布局-->
+    <LinearLayout
+    android:id="@+id/relative"
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+  	android:paddingTop="10sp"
+    android:layout_alignLeft="@+id/input"
+    android:layout_alignRight="@+id/input"
+    android:layout_below="@id/button_home_enter_1"
+    android:layout_gravity="center">
+    <!--命名规范：check_save_password-->
+    <!--命名规范：button_register_enter_1-->
+    
+    <TextView 
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:layout_weight="1"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:text="立即注册"
+        android:id="@+id/register"
+        />
+     <TextView 
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:layout_weight="1"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:text="忘记密码"
+        android:id="@+id/forget"
+        />
+</LinearLayout>
+<TextView
+        android:id="@+id/versionNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="26dp"
+        android:layout_marginRight="28dp"
+        android:text="version 1.0"
+         />
+  
+</RelativeLayout>
