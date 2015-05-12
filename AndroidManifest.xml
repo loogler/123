@@ -26,6 +26,7 @@
         android:targetSdkVersion="21" />
 
     <application
+        android:name="com.qingyuan.activity.message.Chat_EmotionApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"

@@ -12,7 +12,6 @@ import org.json.JSONObject;
 import com.qingyuan.util.HttpUtil;
 import com.qingyuan.util.User;
 
-
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -50,8 +49,9 @@ import android.os.Parcelable;
 public class MainActivity extends Activity {
 
 	private LinearLayout feedbackLayout; // 意见反馈VIEW
-	public static String home_nickname, home_uid, home_gender, check_date;// 用户资料
-//	private boolean is_check;// 检查更新，何时检查
+	public static String home_nickname, home_uid, home_gender, check_date,
+			home_pic;// 用户资料
+			// private boolean is_check;// 检查更新，何时检查
 	private User user;// User 类的实例化
 
 	int index = 1;// 当前页卡编号
@@ -67,33 +67,41 @@ public class MainActivity extends Activity {
 		Log.i("", "onStart()");
 		super.onStart();
 	}
+
 	@Override
 	protected void onNewIntent(Intent intent) {
 		Log.i("", "onNewIntent()");
 		setIntent(intent);
 	}
+
 	@Override
-	protected void onSaveInstanceState(Bundle outState) {}
+	protected void onSaveInstanceState(Bundle outState) {
+	}
+
 	@Override
 	public void onBackPressed() {
 		Log.i("", "onBackPressed()");
 		super.onBackPressed();
 	}
+
 	@Override
 	protected void onPause() {
 		Log.i("", "onPause()");
 		super.onPause();
 	}
+
 	@Override
 	protected void onStop() {
 		Log.i("", "onStop()");
 		super.onStop();
 	}
+
 	@Override
 	protected void onDestroy() {
 		Log.i("", "onDestroy()");
 		super.onDestroy();
 	}
+
 	@Override
 	protected void onResume() {
 		super.onResume();
@@ -126,20 +134,20 @@ public class MainActivity extends Activity {
 		sharedPreferences();// 读取保存的几个数据
 		init(savedInstanceState);// 初始化界面
 	}
-/*缺少部分：1）自动检查并提示更新
- *  2）消息提示部分，有会员动态时收到提示查看
- *  
-	*/
-	
-	
+
+	/*
+	 * 缺少部分：1）自动检查并提示更新 2）消息提示部分，有会员动态时收到提示查看
+	 */
+
 	public void sharedPreferences() {
 		// 读取保存的几个数据
 		SharedPreferences preferences = getSharedPreferences("userInfo",
 				Activity.MODE_PRIVATE);
+		home_pic = preferences.getString("pic", null);
 		home_nickname = preferences.getString("nickname", "");
 		home_uid = preferences.getString("uid", "");
 		home_gender = preferences.getString("gender", "");
-//		is_check = preferences.getBoolean("ischeck", false);
+		// is_check = preferences.getBoolean("ischeck", false);
 		check_date = preferences.getString("checkdate", null);
 		user = new User();
 		user.formatUserFromPreferences(preferences);
@@ -151,10 +159,9 @@ public class MainActivity extends Activity {
 		manager.dispatchCreate(savedInstanceState);
 		// 初始化ViewPager
 		initViewPager();
-		
-		
+
 		viewPage.setCurrentItem(0);
-		viewPage.setOnPageChangeListener(new  MyOnPageChangeListener());
+		viewPage.setOnPageChangeListener(new MyOnPageChangeListener());
 		radioGroup = (RadioGroup) this.findViewById(R.id.radiogroup);
 		radioGroup
 				.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -462,14 +469,18 @@ public class MainActivity extends Activity {
 
 			// 下面是退出按钮
 		} else if (itemId == R.id.logout) {
-			new AlertDialog.Builder(this).setTitle("提示").setMessage("确定退出情缘网？")
-					.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface arg0, int arg1) {
-							finish();
-							System.exit(0);
-						}
-					}).setNegativeButton("取消", null).create().show();
+			new AlertDialog.Builder(this)
+					.setTitle("提示")
+					.setMessage("确定退出情缘网？")
+					.setPositiveButton("确定",
+							new DialogInterface.OnClickListener() {
+								@Override
+								public void onClick(DialogInterface arg0,
+										int arg1) {
+									finish();
+									System.exit(0);
+								}
+							}).setNegativeButton("取消", null).create().show();
 		}
 
 		return true;

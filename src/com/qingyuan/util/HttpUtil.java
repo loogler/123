@@ -26,7 +26,8 @@ public class HttpUtil {
 	public static HttpClient httpClient = new DefaultHttpClient();
 	public static final String URL = "http://www.07919.com";
 	public static final String BASE_URL = "http://www.07919.com/index.php?n=index&h=api&mooApi=android&mooCode=07919";
-
+	
+	
 	/**
 	 *
 	 * @param url
