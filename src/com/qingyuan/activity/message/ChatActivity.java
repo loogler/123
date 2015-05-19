@@ -145,6 +145,7 @@ public class ChatActivity extends Activity implements View.OnClickListener {
 					List<ChatEntity> abc = (List<ChatEntity>) msg.obj;
 					list_infos.addAll(abc);
 					adapter.notifyDataSetChanged();
+					lv_content.setSelection(adapter.getCount() - 1);
 				} else {
 					// do nothing !
 				}
@@ -404,7 +405,7 @@ public class ChatActivity extends Activity implements View.OnClickListener {
 	 *            arraylist,集合
 	 */
 	void getData(String resUrl, ChatEntity list_info, List<ChatEntity> lists) {
-
+		//废弃的方法 
 	}
 
 	/*********************************** Gorgeous split line ****************************************************/

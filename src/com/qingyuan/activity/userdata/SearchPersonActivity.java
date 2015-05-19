@@ -1,16 +1,18 @@
 package com.qingyuan.activity.userdata;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
-import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
@@ -19,11 +21,16 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
@@ -32,6 +39,7 @@ import android.widget.Toast;
 
 import com.qingyuan.PaymentActivity;
 import com.qingyuan.R;
+import com.qingyuan.activity.expand.QingyuanMall;
 import com.qingyuan.activity.message.ChatActivity;
 import com.qingyuan.service.parser.MyAction;
 import com.qingyuan.service.parser.MyUtil;
@@ -42,8 +50,8 @@ import com.qingyuan.util.User;
 
 public class SearchPersonActivity extends Activity {
 
-	 String tag = "searchperson_tag";
-	
+	String tag = "searchperson_tag";
+
 	// 用到的变量
 	// 1. 读取保存的数据
 	private User user;
@@ -57,9 +65,7 @@ public class SearchPersonActivity extends Activity {
 	private AsyncImageLoader2 asyncImageLoader2 = new AsyncImageLoader2();
 	// 4.. 发委托
 	private EditText commission_send_edittext;// 委托内容的输入框
-	private String commission_send_str;// 委托内容
 	private EditText titleText, contentText;// 邮件内容的输入框
-	private String email_send_str;// 邮件内容
 	final String fuid = search_person_fuid;
 
 	// 5. xml中一些用到的id
@@ -69,7 +75,8 @@ public class SearchPersonActivity extends Activity {
 			user_child, user_house, user_vehicle, user_constellation,
 			user_nation, user_home, user_weight, user_body, qiubo, like,
 			entrust, more;
-	private LinearLayout photos;// 照片相册
+
+	private GridView grid;// 照片相册
 	private ImageView user_pic;// 头像
 	// 6. 这些个textView需要赋值时用到的变量
 	private String memberText1, user_nickname1, user_age1, user_birthyear1,
@@ -86,21 +93,27 @@ public class SearchPersonActivity extends Activity {
 	String msgLeer;
 	private String[] arrServices, arrKeyServices;
 	int orderKey;
-	private String[] items=new String []{
-			"发送邮件","赠送礼物","在线聊天"
-	};
+	private String[] items = new String[] { "发送邮件", "赠送礼物", "在线聊天" };
 	LinearLayout layoutEmail;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.searchpersonactivity);
-		init();
-		// Log.i("init", "加载了初始化");
-		initView();
+		SharedPreferences sharedPreferences = getSharedPreferences("userInfo",
+				Activity.MODE_PRIVATE);
+		user = new User();
+		user.formatUserFromPreferences(sharedPreferences);
+		home_nickname = sharedPreferences.getString("nickname", "");
+		home_uid = sharedPreferences.getString("uid", "");
+		home_gender = sharedPreferences.getString("gender", "");
+		home_cid = sharedPreferences.getString("cid", "");
+		home_star = sharedPreferences.getString("star", "");
+
 		// Log.i("initView", "加载了初始化view");
-		loadData();
+		initView();
 		// Log.i("loadData", "加载了loaddata");
+		loadData();
 
 		// 发送委托的按钮
 		entrust.setOnClickListener(new Button.OnClickListener() {
@@ -271,180 +284,205 @@ public class SearchPersonActivity extends Activity {
 			}
 		});
 		more.setOnClickListener(new View.OnClickListener() {
-			
+
 			@Override
 			public void onClick(View arg0) {
 				new AlertDialog.Builder(SearchPersonActivity.this)
-				.setItems(items, new OnClickListener() {
-					
-					@Override
-					public void onClick(DialogInterface arg0, int arg1) {
-						switch (arg1) {
-						//email present chat
-						
-						case 0:
-							Log.i(tag+"more", arg1+"");
-							//邮件
-							if (home_cid.equals("20") || home_cid.equals("30")) {
-								layoutEmail = (LinearLayout) getLayoutInflater().inflate(
-										R.layout.searchperson_mail, null);
-								new AlertDialog.Builder(SearchPersonActivity.this)
-										.setTitle("发送邮件").setView(layoutEmail)
-										.setPositiveButton("发送", new OnClickListener() {
-											@Override
-											public void onClick(DialogInterface dialog,
-													int which) {
-												TextView nicknameText = (TextView) layoutEmail
-														.findViewById(R.id.nicknameText);
-												nicknameText.setText("收件人："
-														+ user_nickname1);
-												titleText = (EditText) layoutEmail
-														.findViewById(R.id.titleText);
-												contentText = (EditText) layoutEmail
-														.findViewById(R.id.contentText);
-												new EmailThread().start();
-											}
-										}).setNegativeButton("取消", null).show();
-							} else {
-								new AlertDialog.Builder(SearchPersonActivity.this)
-										.setTitle("提示:")
-										.setMessage("只有VIP会员才可以发送电子邮件给对方，现在升级VIP会员？")
-										.setPositiveButton("确定", new OnClickListener() {
-											@Override
-											public void onClick(DialogInterface dialog,
-													int which) {
-												String url = "http://www.07919.com/index.php?n=index&h=govip"; // 升级会员的网址（用浏览器打开）
-												Intent intent = new Intent(
-														Intent.ACTION_VIEW);
-												intent.setData(Uri.parse(url));
-												startActivity(intent);
-											}
-										}).setNegativeButton("取消", null).show();
-							}
-							break;
-							
-						case 1:
-							// 送礼物
-						
-									Intent intent = new Intent(SearchPersonActivity.this,
-											SearchPerson_Gift.class);
+						.setItems(items, new OnClickListener() {
+
+							@Override
+							public void onClick(DialogInterface arg0, int arg1) {
+								switch (arg1) {
+								// email present chat
+
+								case 0:
+									Log.i(tag + "more", arg1 + "");
+									// 邮件
+									if (home_cid.equals("20")
+											|| home_cid.equals("30")) {
+										layoutEmail = (LinearLayout) getLayoutInflater()
+												.inflate(
+														R.layout.searchperson_mail,
+														null);
+										new AlertDialog.Builder(
+												SearchPersonActivity.this)
+												.setTitle("发送邮件")
+												.setView(layoutEmail)
+												.setPositiveButton("发送",
+														new OnClickListener() {
+															@Override
+															public void onClick(
+																	DialogInterface dialog,
+																	int which) {
+
+																titleText = (EditText) layoutEmail
+																		.findViewById(R.id.titleText);
+																contentText = (EditText) layoutEmail
+																		.findViewById(R.id.contentText);
+																new EmailThread()
+																		.start();
+															}
+														})
+												.setNegativeButton("取消", null)
+												.show();
+									} else {
+										new AlertDialog.Builder(
+												SearchPersonActivity.this)
+												.setTitle("提示:")
+												.setMessage(
+														"只有VIP会员才可以发送电子邮件给对方，现在升级VIP会员？")
+												.setPositiveButton("确定",
+														new OnClickListener() {
+															@Override
+															public void onClick(
+																	DialogInterface dialog,
+																	int which) {
+																String url = "http://www.07919.com/index.php?n=index&h=govip"; // 升级会员的网址（用浏览器打开）
+																Intent intent = new Intent(
+																		Intent.ACTION_VIEW);
+																intent.setData(Uri
+																		.parse(url));
+																startActivity(intent);
+															}
+														})
+												.setNegativeButton("取消", null)
+												.show();
+									}
+									break;
+
+								case 1:
+									// 送礼物
+
+									Intent intent = new Intent(
+											SearchPersonActivity.this,
+											QingyuanMall.class);
 									startActivity(intent);
 									break;
-							
-						case 2:
-							int s_cid = user.getScid();
-							if (s_cid < 40) {
-								ChatActivity.talk_fuid = search_person_fuid;
-								ChatActivity.talk_nickname = user_nickname1;
 
-								Intent intent1 = new Intent(SearchPersonActivity.this,
-										ChatActivity.class);
-								startActivity(intent1);
-							} else {
-								new AlertDialog.Builder(SearchPersonActivity.this)
-										.setMessage("您不能发起在线聊天，要升级会员吗？")
-										.setPositiveButton("确定", new OnClickListener() {
-											@Override
-											public void onClick(DialogInterface dialog,
-													int which) {
-												int s_cid = user.getScid();
-												if (s_cid > 0 && s_cid < 40) {
-													arrServices = MyUtil
-															.getArr(getResources()
-																	.getStringArray(
-																			R.array.renewalservice),
-																	1);
-													arrKeyServices = MyUtil
-															.getArr(getResources()
-																	.getStringArray(
-																			R.array.renewalservice),
-																	0);
-												} else {
-													arrServices = MyUtil.getArr(
-															getResources().getStringArray(
-																	R.array.service), 1);
-													arrKeyServices = MyUtil.getArr(
-															getResources().getStringArray(
-																	R.array.service), 0);
-												}
-												String[] itemArr = new String[arrServices.length];
-												for (int i = 0; i < arrServices.length; i++) {
-													String a = "/3个月";
-													if (i == 1)
-														a = "/6个月";
-													else if (i == 2) {
-														a = "/1个月";
-													}
-													itemArr[i] = arrServices[i] + a + " "
-															+ arrKeyServices[i] + "元";
-												}
-												new AlertDialog.Builder(
-														SearchPersonActivity.this)
-														.setTitle("购买服务")
-														.setSingleChoiceItems(itemArr, 0,
-																new OnClickListener() {
+								case 2:
+									int s_cid = user.getScid();
+									if (s_cid < 40) {
+										ChatActivity.talk_fuid = search_person_fuid;
+										ChatActivity.talk_nickname = user_nickname1;
 
-																	@Override
-																	public void onClick(
-																			DialogInterface dialog,
-																			int which) {
-																		orderKey = which;
+										Intent intent1 = new Intent(
+												SearchPersonActivity.this,
+												ChatActivity.class);
+										startActivity(intent1);
+									} else {
+										new AlertDialog.Builder(
+												SearchPersonActivity.this)
+												.setMessage("您不能发起在线聊天，要升级会员吗？")
+												.setPositiveButton("确定",
+														new OnClickListener() {
+															@Override
+															public void onClick(
+																	DialogInterface dialog,
+																	int which) {
+																int s_cid = user
+																		.getScid();
+																if (s_cid > 0
+																		&& s_cid < 40) {
+																	arrServices = MyUtil
+																			.getArr(getResources()
+																					.getStringArray(
+																							R.array.renewalservice),
+																					1);
+																	arrKeyServices = MyUtil
+																			.getArr(getResources()
+																					.getStringArray(
+																							R.array.renewalservice),
+																					0);
+																} else {
+																	arrServices = MyUtil
+																			.getArr(getResources()
+																					.getStringArray(
+																							R.array.service),
+																					1);
+																	arrKeyServices = MyUtil
+																			.getArr(getResources()
+																					.getStringArray(
+																							R.array.service),
+																					0);
+																}
+																String[] itemArr = new String[arrServices.length];
+																for (int i = 0; i < arrServices.length; i++) {
+																	String a = "/3个月";
+																	if (i == 1)
+																		a = "/6个月";
+																	else if (i == 2) {
+																		a = "/1个月";
 																	}
-																})
-														.setPositiveButton("立即购买",
-																new OnClickListener() {
-
-																	@Override
-																	public void onClick(
-																			DialogInterface dialog,
-																			int which) {
-																		Intent intent = new Intent();
-																		intent.setClass(
-																				SearchPersonActivity.this,
-																				PaymentActivity.class);
-																		Bundle bundle = new Bundle();
-																		Order order = new Order(
+																	itemArr[i] = arrServices[i]
+																			+ a
+																			+ " "
+																			+ arrKeyServices[i]
+																			+ "元";
+																}
+																new AlertDialog.Builder(
+																		SearchPersonActivity.this)
+																		.setTitle(
+																				"购买服务")
+																		.setSingleChoiceItems(
+																				itemArr,
 																				0,
-																				Integer.parseInt(arrKeyServices[orderKey]),
-																				arrServices[orderKey],
-																				"");
-																		bundle.putSerializable(
-																				"order",
-																				order);
-																		intent.putExtras(bundle);
-																		startActivity(intent);
-																	}
-																})
-														.setNegativeButton("取消", null)
-														.create().show();
-											}
-										}).setNegativeButton("取消", null).show();
+																				new OnClickListener() {
+
+																					@Override
+																					public void onClick(
+																							DialogInterface dialog,
+																							int which) {
+																						orderKey = which;
+																					}
+																				})
+																		.setPositiveButton(
+																				"立即购买",
+																				new OnClickListener() {
+
+																					@Override
+																					public void onClick(
+																							DialogInterface dialog,
+																							int which) {
+																						Intent intent = new Intent();
+																						intent.setClass(
+																								SearchPersonActivity.this,
+																								PaymentActivity.class);
+																						Bundle bundle = new Bundle();
+																						Order order = new Order(
+																								0,
+																								Integer.parseInt(arrKeyServices[orderKey]),
+																								arrServices[orderKey],
+																								"");
+																						bundle.putSerializable(
+																								"order",
+																								order);
+																						intent.putExtras(bundle);
+																						startActivity(intent);
+																					}
+																				})
+																		.setNegativeButton(
+																				"取消",
+																				null)
+																		.create()
+																		.show();
+															}
+														})
+												.setNegativeButton("取消", null)
+												.show();
+									}
+									break;
+
+								}
 							}
-							break;
-							
-						}
-					}
-				}).create().show();
+						}).create().show();
 			}
 		});
-		
-		
-	}
+
+	}// ////onCreate
 
 	/**
 	 * 获取用户信息，格式化。
 	 * */
-	private void init() {
-		SharedPreferences sharedPreferences = getSharedPreferences("userInfo",
-				Activity.MODE_PRIVATE);
-		user = new User();
-		user.formatUserFromPreferences(sharedPreferences);
-		home_nickname = sharedPreferences.getString("nickname", "");
-		home_uid = sharedPreferences.getString("uid", "");
-		home_gender = sharedPreferences.getString("gender", "");
-		home_cid = sharedPreferences.getString("cid", "");
-		home_star = sharedPreferences.getString("star", "");
-	}
 
 	private void initView() {
 		// 定义所有文字的对应控件
@@ -477,7 +515,7 @@ public class SearchPersonActivity extends Activity {
 		entrust = (TextView) findViewById(R.id.entrust);// 委托
 		more = (TextView) findViewById(R.id.more);// 其他
 		//
-		photos = (LinearLayout) findViewById(R.id.photos);// 照片展示
+		grid = (GridView) findViewById(R.id.grid);// 照片展示
 
 	}
 
@@ -745,41 +783,43 @@ public class SearchPersonActivity extends Activity {
 				} else {
 					introduce1 = "未填写";
 				}
-				// 获取头像资源
+
+				ImgItem item = null;
+				List<ImgItem> items = new ArrayList<SearchPersonActivity.ImgItem>();
 				JSONArray arr = user.getJSONArray("pics");
 				for (int i = 0; i < arr.length(); i++) {
 					imageUrl[i] = arr.optJSONObject(i).getString("imgurl");
-					Log.i("src", imageUrl[i]);
-					imagenum++;
+					item = new ImgItem();
+					item.setImgUrl(imageUrl[i]);
+					items.add(item);
 				}
+				int size = items.size();
+				Log.i(tag, "item.size()" + size);
+				int length = 100;
+
+				/*
+				 * DisplayMetrics dm = new DisplayMetrics();
+				 * getWindowManager().getDefaultDisplay().getMetrics(dm); float
+				 * density = dm.density; int gridviewWidth = (int) (size *
+				 * (length + 4) * density); int itemWidth = (int) (length *
+				 * density);
+				 * 
+				 * LinearLayout.LayoutParams params = new
+				 * LinearLayout.LayoutParams( gridviewWidth,
+				 * LinearLayout.LayoutParams.FILL_PARENT);
+				 * grid.setLayoutParams(params); grid.setColumnWidth(itemWidth);
+				 */
+				grid.setHorizontalSpacing(5);
+				grid.setStretchMode(GridView.NO_STRETCH);
+				grid.setNumColumns(size);
+				GridViewAdapter ada = new GridViewAdapter(
+						SearchPersonActivity.this, items);
+				grid.setAdapter(ada);
+
+				// 获取头像资源
 				user_pic.setVisibility(View.VISIBLE);
 				loadImage(HttpUtil.URL + "/" + user.getString("pic"),
 						R.id.user_pic);
-				// 获取照片资源
-				for (int i = 0; i < imageUrl.length; i++) {
-					if (imageUrl[i] != null && !imageUrl[i].equals("")) {
-						final ImageView img = new ImageView(this);
-						img.setId(i);
-						img.setLayoutParams(new LayoutParams(130, 110));
-						img.setScaleType(ImageView.ScaleType.FIT_START);
-						loadImage(HttpUtil.URL + "/" + imageUrl[i], img.getId());
-						photos.addView(img);
-						img.setOnClickListener(new View.OnClickListener() {
-
-							@Override
-							public void onClick(View arg0) {
-								Intent intent = new Intent(
-										SearchPersonActivity.this,
-										SearchPerson_Photos.class);
-								int id = img.getId();
-								SearchPerson_Photos.imagePosition = img.getId();
-								SearchPerson_Photos.fuid = fuid;
-								Log.i("photo_id", id + "");
-								startActivity(intent);
-							}
-						});
-					}
-				}
 
 				// Log.i("entity", "加载了entity");
 				entity();
@@ -809,6 +849,81 @@ public class SearchPersonActivity extends Activity {
 	}
 
 	/**
+	 * 照片路径
+	 * 
+	 * @author Administrator
+	 *
+	 */
+	class ImgItem {
+		private String ImgUrl;
+
+		public String getImgUrl() {
+			return ImgUrl;
+		}
+
+		public void setImgUrl(String imgUrl) {
+			ImgUrl = imgUrl;
+		}
+
+	}
+
+	/**
+	 * 相册适配
+	 * 
+	 * @author Administrator
+	 *
+	 */
+
+	public class GridViewAdapter extends BaseAdapter {
+		Context context;
+		List<ImgItem> list;
+		LayoutInflater inflater;
+
+		public GridViewAdapter(Context _context, List<ImgItem> _list) {
+			this.list = _list;
+			this.context = _context;
+
+		}
+
+		@Override
+		public int getCount() {
+			return list.size();
+		}
+
+		@Override
+		public Object getItem(int position) {
+			return list.get(position);
+		}
+
+		@Override
+		public long getItemId(int position) {
+			return position;
+		}
+
+		@Override
+		public View getView(final int position, View convertView,
+				ViewGroup parent) {
+			LayoutInflater layoutInflater = LayoutInflater.from(context);
+			convertView = layoutInflater.inflate(
+					R.layout.item_searchperson_photos, null);
+			ImageView iv_photo = (ImageView) convertView
+					.findViewById(R.id.iv_serchperson_photos);
+			String imgs = HttpUtil.URL + "/" + list.get(position).getImgUrl();
+			loadImage(imgs, R.id.iv_serchperson_photos, convertView);
+			convertView.setOnClickListener(new View.OnClickListener() {
+
+				@Override
+				public void onClick(View arg0) {
+					Toast.makeText(getApplicationContext(),
+							"第" + position + "张", Toast.LENGTH_SHORT).show();
+				}
+			});
+
+			return convertView;
+		}
+	}
+
+	/**
 	 * 添加数据
 	 * */
 	private void entity() {
@@ -828,7 +943,7 @@ public class SearchPersonActivity extends Activity {
 		user_income.setText("收入：" + user_income1);
 		user_child.setText("有无孩子：" + user_child1);
 		love_state.setText(love_state1);
-		
+
 		if (user_homeprovince1.length() > 0 || user_city1.length() > 0) {
 			user_home.setText(user_homeprovince1 + user_homecity1);
 			Log.i("user_homeprovince1", user_homeprovince1);
@@ -877,6 +992,21 @@ public class SearchPersonActivity extends Activity {
 	 * 异步加载相册图片
 	 * 
 	 * */
+	private void loadImage(final String url, final int id, final View view) {
+		// 如果缓存过就会从缓存中取出图像，ImageCallback接口中方法也不会被执行
+		Drawable cacheImage = asyncImageLoader2.loadDrawable(url,
+				new AsyncImageLoader2.ImageCallback() {
+					// 请参见实现：如果第一次加载url时下面方法会执行
+					public void imageLoaded(Drawable imageDrawable) {
+						((ImageView) view.findViewById(id))
+								.setImageDrawable(imageDrawable);
+					}
+				});
+		if (cacheImage != null) {
+			((ImageView) view.findViewById(id)).setImageDrawable(cacheImage);
+		}
+	}
+
 	private void loadImage(final String url, final int id) {
 		// 如果缓存过就会从缓存中取出图像，ImageCallback接口中方法也不会被执行
 		Drawable cacheImage = asyncImageLoader2.loadDrawable(url,
@@ -965,29 +1095,29 @@ public class SearchPersonActivity extends Activity {
 			}
 		});
 	}
-	
+
 	// 发送邮件的子线程
-		class EmailThread extends Thread {
-			public void run() {
-				int uid = Integer.parseInt(home_uid);
-				int toUid = Integer.parseInt(search_person_fuid);
-				String title = titleText.getText().toString().trim();
-				String content = contentText.getText().toString().trim();
-				int id = 0;
-				showMsg = MyAction.sendEmail(uid, toUid, id, title, content);
-				if (showMsg == null) {
-					showMsg = "发送成功！";
-				}
-				SearchPersonActivity.this.runOnUiThread(new Runnable() {
-
-					@Override
-					public void run() {
-						Toast.makeText(SearchPersonActivity.this, showMsg,
-								Toast.LENGTH_LONG).show();
-					}
-				});
+	class EmailThread extends Thread {
+		public void run() {
+			int uid = Integer.parseInt(home_uid);
+			int toUid = Integer.parseInt(search_person_fuid);
+			String title = titleText.getText().toString().trim();
+			String content = contentText.getText().toString().trim();
+			int id = 0;
+			showMsg = MyAction.sendEmail(uid, toUid, id, title, content);
+			if (showMsg == null) {
+				showMsg = "发送成功！";
 			}
+			SearchPersonActivity.this.runOnUiThread(new Runnable() {
 
+				@Override
+				public void run() {
+					Toast.makeText(SearchPersonActivity.this, showMsg,
+							Toast.LENGTH_LONG).show();
+				}
+			});
 		}
+
+	}
 
 }

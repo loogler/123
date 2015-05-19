@@ -1,13 +1,12 @@
 package com.qingyuan.util;
 
-import com.qingyuan.R;
-
-import android.R.integer;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Handler;
 import android.view.Gravity;
 import android.widget.TextView;
+
+import com.qingyuan.R;
 
 public class CustomProgressDialog extends Dialog {
 	private Context context = null;
@@ -27,7 +26,7 @@ public class CustomProgressDialog extends Dialog {
 			String message) {
 		customProgressDialog = new CustomProgressDialog(context,
 				R.style.CustomProgressDialog);
-		customProgressDialog.setContentView(R.layout.customprogressdialog);
+		customProgressDialog.setContentView(R.layout.dialog_customprogress);
 		customProgressDialog.getWindow().getAttributes().gravity = Gravity.CENTER;
 		customProgressDialog.setMessage("" + message);
 		return customProgressDialog;
@@ -38,7 +37,7 @@ public class CustomProgressDialog extends Dialog {
 
 		customProgressDialog = new CustomProgressDialog(context,
 				R.style.CustomProgressDialog);
-		customProgressDialog.setContentView(R.layout.customprogressdialog);
+		customProgressDialog.setContentView(R.layout.dialog_customprogress);
 		customProgressDialog.getWindow().getAttributes().gravity = Gravity.CENTER;
 		customProgressDialog.setMessage("" + message);
 		customProgressDialog.setTime(time);
@@ -48,17 +47,19 @@ public class CustomProgressDialog extends Dialog {
 	}
 
 	public CustomProgressDialog setTime(int time) {
-		
 
-		 new Handler().postDelayed(new Runnable() {
-		  
-		  @Override public void run() { customProgressDialog.dismiss(); } }, time);
-		 
+		new Handler().postDelayed(new Runnable() {
+
+			@Override
+			public void run() {
+				customProgressDialog.dismiss();
+			}
+		}, time);
+
 		return null;
 
 	}
 
-	
 	/** 标题哦 */
 	public CustomProgressDialog setTitile(String strTitle) {
 		return customProgressDialog;

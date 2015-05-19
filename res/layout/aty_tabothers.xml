@@ -14,6 +14,18 @@
         android:id="@+id/btn_tabothers_mall"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:text="鲜花商城" />
+    <Button 
+        android:id="@+id/btn_tabothers_weibai"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="维佰商城"
+        />
+    <Button 
+        android:id="@+id/btn_tabothers_invitation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="推荐好友"
+        />
 
 </LinearLayout>

@@ -14,7 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MS_PurseActivity extends Activity {
-	String tag="MS_PurseAcitivity";
+	String tag = "MS_PurseAcitivity";
 	// xml布局变量
 	private TextView money, score;
 	private LinearLayout purse_ui;
@@ -46,8 +46,12 @@ public class MS_PurseActivity extends Activity {
 					JSONObject js = new JSONObject(url);
 					int code = js.getInt("code");
 					if (code == 1) {
-						money.setText("余额："+js.getJSONObject("result").getString(
-								"money"+"元"));
+						money.setText("余额："
+								+ js.getJSONObject("result").getString("money")
+								+ " 元");
+						score.setText("积分： "
+								+ js.getJSONObject("result")
+										.getString("points") + " 分");
 					} else if (code == 10000) {
 						Toast.makeText(getApplicationContext(),
 								js.getString("message"), Toast.LENGTH_SHORT);

@@ -9,6 +9,12 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 联系人写权限 -->
+    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
+    <!-- 联系人读权限 -->
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+	<!-- 发短信短信 -->
+	<uses-permission android:name="android.permission.SEND_SMS" />
 
     <!-- 支付宝 -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -58,8 +64,9 @@
         <!-- com.qingyuan.activity.userdata.部分，这部分负责加载用户数据 -->
         <activity android:name="com.qingyuan.activity.userdata.SearchPersonActivity" >
         </activity>
-        <activity android:name="com.qingyuan.activity.userdata.SearchPerson_Photos"></activity>
-		<activity android:name="com.qingyuan.activity.userdata.SearchPerson_Chat" >
+        <activity android:name="com.qingyuan.activity.userdata.SearchPerson_Photos" >
+        </activity>
+        <activity android:name="com.qingyuan.activity.userdata.SearchPerson_Chat" >
         </activity>
         <activity android:name="com.qingyuan.activity.userdata.SearchPerson_Gift" >
         </activity>
@@ -73,14 +80,13 @@
         </activity>
         <activity android:name="com.qingyuan.activity.userdata.MS_IntroduceActivity" >
         </activity>
-        
         <activity android:name="com.qingyuan.activity.userdata.MS_ViewDataActivity" >
         </activity>
         <activity android:name="com.qingyuan.activity.userdata.MS_View_FragmentD" >
         </activity>
         <activity android:name="com.qingyuan.activity.userdata.MS_View_FragmentC" >
         </activity>
-        
+
         
         <!-- com.qingyuan.activity.before 登录前的界面 -->
         <activity android:name="com.qingyuan.activity.before.RegistActivity" >
@@ -89,47 +95,74 @@
         </activity>
         <activity android:name="com.qingyuan.activity.before.UserAgreementActivity" >
         </activity>
+
+        
         
         <!-- com.qingyuan.activity.expand 拓展功能,商城好友等各种杂项 -->
+
+        <activity android:name="com.qingyuan.activity.expand.QingyuanMall" >
+        </activity>
+        <activity android:name="com.qingyuan.activity.expand.WeiBaiMall" >
+        </activity>
+        <activity android:name="com.qingyuan.activity.expand.Invitation"></activity>
+
         
-        <activity android:name="com.qingyuan.activity.expand.QingyuanMall"></activity>
+        <!-- com.qingyuan.activity.message 消息之类的界面 -->
+        <activity android:name="com.qingyuan.activity.message.EmailActivity" >
+        </activity>
+        <activity android:name="com.qingyuan.activity.message.VisitedActivity" >
+        </activity>
+        <activity android:name="com.qingyuan.activity.message.ChatActivity" >
+        </activity>
+        <activity android:name="com.qingyuan.activity.message.CommissionActivity" >
+        </activity>
+        <activity android:name="com.qingyuan.activity.message.LeerActivity" >
+        </activity>
+        <activity android:name="com.qingyuan.activity.message.GiftActivity" >
+        </activity>
+        <activity android:name="com.qingyuan.activity.message.LikerActivity" >
+        </activity>
+        <activity android:name="com.qingyuan.activity.message.EmailGetFragment" >
+        </activity>
+        <activity android:name="com.qingyuan.activity.message.EmailSentFragment" >
+        </activity>
+        <activity android:name="com.qingyuan.activity.message.EmailQingYuanActivity" >
+        </activity>
+        <activity android:name="com.qingyuan.activity.message.EmailContentActivity" >
+        </activity>
+
         
+        <!-- com.qingyuan.alipay 支付宝专用 -->
+        <activity android:name="com.qingyuan.alipay.Base64" >
+        </activity>
+        <activity android:name="com.qingyuan.alipay.Keys" >
+        </activity>
+        <activity android:name="com.qingyuan.alipay.Result" >
+        </activity>
+        <activity android:name="com.qingyuan.alipay.Rsa" >
+        </activity>
+
         
+        <!-- com.qingyuan.listadapter_view 列表适配器视图窗口 -->
+        <activity android:name="com.qingyuan.listadapter_view.L_Search" >
+        </activity>
+        <activity android:name="com.qingyuan.listadapter_view.L_SearchPerson_GiftList" >
+        </activity>
+        <activity android:name="com.qingyuan.listadapter_view.L_NewsAdapter" >
+        </activity>
+        <activity android:name="com.qingyuan.listadapter_view.L_News_EmailgetAdapter" >
+        </activity>
+        <activity android:name="com.qingyuan.listadapter_view.L_News_EmailSentAdapter" >
+        </activity>
+
         
-        <!-- com.qingyuan.activity.message 消息之类的界面  -->
-        <activity android:name="com.qingyuan.activity.message.EmailActivity"></activity>
-        <activity android:name="com.qingyuan.activity.message.VisitedActivity"></activity>
-        <activity android:name="com.qingyuan.activity.message.ChatActivity"></activity>
-        <activity android:name="com.qingyuan.activity.message.CommissionActivity"></activity>
-        <activity android:name="com.qingyuan.activity.message.LeerActivity"></activity>
-        <activity android:name="com.qingyuan.activity.message.GiftActivity"></activity>
-        <activity android:name="com.qingyuan.activity.message.LikerActivity"></activity>
-        <activity android:name="com.qingyuan.activity.message.EmailGetFragment"></activity>
-        <activity android:name="com.qingyuan.activity.message.EmailSentFragment"></activity>
-        <activity android:name="com.qingyuan.activity.message.EmailQingYuanActivity"></activity>
-        <activity android:name="com.qingyuan.activity.message.EmailContentActivity"></activity>
+        <!-- com.qingyuan.popupwindow   弹出的一个界面，省去跳转activity生命周期流程 -->
+        <activity android:name="com.qingyuan.popupwindow.MySelf_Mod_Photo" >
+        </activity>
+
         
-        
-		<!-- com.qingyuan.alipay 支付宝专用 -->
-		<activity android:name="com.qingyuan.alipay.Base64"></activity>
-		<activity android:name="com.qingyuan.alipay.Keys"></activity>
-		<activity android:name="com.qingyuan.alipay.Result"></activity>
-		<activity android:name="com.qingyuan.alipay.Rsa"></activity>
-		
-		
-		<!-- com.qingyuan.listadapter_view 列表适配器视图窗口 -->
-		<activity android:name="com.qingyuan.listadapter_view.L_Search" ></activity>
-		<activity android:name="com.qingyuan.listadapter_view.L_SearchPerson_GiftList" ></activity>
-        <activity android:name="com.qingyuan.listadapter_view.L_NewsAdapter"></activity>
-        <activity android:name="com.qingyuan.listadapter_view.L_News_EmailgetAdapter"></activity>
-        <activity android:name="com.qingyuan.listadapter_view.L_News_EmailSentAdapter"></activity>
-		
-		
-		<!-- com.qingyuan.popupwindow   弹出的一个界面，省去跳转activity生命周期流程 -->
-		<activity android:name="com.qingyuan.popupwindow.MySelf_Mod_Photo"></activity>
-		
-		<!-- com.qingyuan.service.parser 解析器用于解析数据，获得数据运算、取值方法 -->
-		<activity android:name="com.qingyuan.service.parser.MyDatePickerDialog" >
+        <!-- com.qingyuan.service.parser 解析器用于解析数据，获得数据运算、取值方法 -->
+        <activity android:name="com.qingyuan.service.parser.MyDatePickerDialog" >
         </activity>
         <activity android:name="com.qingyuan.service.parser.MyDateSpinner" >
         </activity>
@@ -141,8 +174,7 @@
         </activity>
         <activity android:name="com.qingyuan.service.parser.XMLParser_Search" >
         </activity>
-		
-		
+
         <!-- com.qingyuan.util部分 工具类 -->
         <activity android:name="com.qingyuan.util.HttpUtil" >
         </activity>
@@ -154,7 +186,6 @@
         </activity>
         <activity android:name="com.qingyuan.util.AsyncImageLoader" >
         </activity>
-       
         <activity android:name="com.qingyuan.util.TableItem_Search" >
         </activity>
     </application>

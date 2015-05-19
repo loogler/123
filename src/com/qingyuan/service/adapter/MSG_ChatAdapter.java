@@ -159,7 +159,7 @@ public class MSG_ChatAdapter extends BaseAdapter {
 		 * 
 		 * return drawable; } }, null);
 		 */
-		// TODO setbounds 无法在正确的位置显示图片；
+		
 		/*
 		 * 在这里存在一个问题，就是图片的加载过程不受textView初始化时候View大小的限定，即加载前，当前的
 		 * textview已经设定好了布局的大小，如果在此时异步加载了图片，该图片是没有被分配空间去存放的，所以导致

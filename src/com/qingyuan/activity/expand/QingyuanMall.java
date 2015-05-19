@@ -6,37 +6,46 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
-import com.handmark.pulltorefresh.library.PullToRefreshGridView;
-import com.qingyuan.R;
-import com.qingyuan.util.AsyncImageLoader2;
-import com.qingyuan.util.HttpUtil;
-
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
-import android.graphics.AvoidXfermode.Mode;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.view.ViewPager.LayoutParams;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
+import com.handmark.pulltorefresh.library.PullToRefreshGridView;
+import com.qingyuan.MainActivity;
+import com.qingyuan.R;
+import com.qingyuan.util.AsyncImageLoader2;
+import com.qingyuan.util.CustomProgressDialog;
+import com.qingyuan.util.HttpUtil;
+
 /**
  * 
  * @author Administrator 加载情缘商城-----虚拟商品
  */
-public class QingyuanMall extends Activity {
+public class QingyuanMall extends Activity implements OnItemClickListener {
 	private static final String tag = "QingyuanMall";
 
 	private String home_uid;
@@ -48,28 +57,40 @@ public class QingyuanMall extends Activity {
 	private PullToRefreshGridView pullToRefreshGridView;
 	private QingyuanMall_Adapter adapter_Mall;
 
+	private boolean payType = false;// 参数
+									// link为真，支付方式为积分，link为假，或者不加link参数时，支付方式为钱包支付。
+	private String fuid;// 接受edit输入参数。
+	// 弹窗
+	private Dialog dia;
+	// 用于传递值的变量。
+	private String mn, ct, i;
+
+	AsyncImageLoader2 asyncImageLoader2;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.aty_qy_mall);
-		pullToRefreshGridView=(PullToRefreshGridView) findViewById(R.id.pull_refresh_grid);
-		
-		adapter_Mall= new QingyuanMall_Adapter(QingyuanMall.this, list_Infos,gridView);
-		gridView=pullToRefreshGridView.getRefreshableView();
-		
-		
-		new  XML_Parse_Thread().start();
+		setContentView(R.layout.aty_other_qy_mall);
+		pullToRefreshGridView = (PullToRefreshGridView) findViewById(R.id.pull_refresh_grid);
+
+		adapter_Mall = new QingyuanMall_Adapter(QingyuanMall.this, list_Infos,
+				gridView);
+		gridView = pullToRefreshGridView.getRefreshableView();
+
+		new XML_Parse_Thread().start();
 		gridView.setAdapter(adapter_Mall);
-		pullToRefreshGridView.setMode(com.handmark.pulltorefresh.library.PullToRefreshBase.Mode.PULL_FROM_END);
-		pullToRefreshGridView.setOnRefreshListener(new  OnRefreshListener<GridView>() {
-			
-			@Override
-			public void onRefresh(PullToRefreshBase<GridView> refreshView) {
-				pageIndex++;
-				new XML_Parse_Thread().start();  
-			}
-		});
-		
+		pullToRefreshGridView
+				.setMode(com.handmark.pulltorefresh.library.PullToRefreshBase.Mode.PULL_FROM_END);
+		pullToRefreshGridView
+				.setOnRefreshListener(new OnRefreshListener<GridView>() {
+
+					@Override
+					public void onRefresh(
+							PullToRefreshBase<GridView> refreshView) {
+						pageIndex++;
+						new XML_Parse_Thread().start();
+					}
+				});
 
 	}
 
@@ -81,10 +102,10 @@ public class QingyuanMall extends Activity {
 
 		String showMSG;
 		/** 尝试从json处获取资源 */
-		String url=HttpUtil.BASE_URL
-				+ "&f=gift&toType=json&action=LIST&page_size=15&android_uid=" + home_uid
-				+ "&page=" + pageIndex;
-	
+		String url = HttpUtil.BASE_URL
+				+ "&f=gift&toType=json&action=LIST&page_size=15&android_uid="
+				+ home_uid + "&page=" + pageIndex;
+
 		List<QingyuanMall_Info> infos = new ArrayList<QingyuanMall.QingyuanMall_Info>();
 		QingyuanMall_Info info = null;
 
@@ -92,7 +113,7 @@ public class QingyuanMall extends Activity {
 		public void run() {
 
 			try {
-				String res=HttpUtil.getRequest(url);
+				String res = HttpUtil.getRequest(url);
 				JSONObject js = new JSONObject(res);
 				showMSG = js.getString("message");
 				if (js.getInt("code") == 1) {
@@ -122,8 +143,7 @@ public class QingyuanMall extends Activity {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			
-			
+
 			msg = handler.obtainMessage();
 			msg.obj = infos;
 			msg.sendToTarget();
@@ -143,8 +163,8 @@ public class QingyuanMall extends Activity {
 		AsyncImageLoader2 asyncImageLoader2 = new AsyncImageLoader2();
 
 		public QingyuanMall_Adapter(Context context,
-				List<QingyuanMall_Info> infos,GridView gridView) {
-			this.mgridView=gridView;
+				List<QingyuanMall_Info> infos, GridView gridView) {
+			this.mgridView = gridView;
 			this.context = context;
 			this.infos = infos;
 			inflater = LayoutInflater.from(this.context);
@@ -177,39 +197,134 @@ public class QingyuanMall extends Activity {
 
 		@Override
 		public View getView(int position, View view, ViewGroup parent) {
-			
-			ViewHolder viewHolder = null;
-			String url = HttpUtil.URL + "/" + infos.get(position).getSrc();
-			
-				view = inflater.inflate(R.layout.item_qy_mall, null);
-				viewHolder = new ViewHolder();
-				viewHolder.iv_photo = (ImageView) view
-						.findViewById(R.id.iv_qy_mall);
-				viewHolder.tv_cent = (TextView) view
-						.findViewById(R.id.tv_qy_mall_cent);
-				viewHolder.tv_name = (TextView) view
-						.findViewById(R.id.tv_qy_mall_name);
-				viewHolder.tv_price = (TextView) view.findViewById(R.id.tv_qy_mall_price);
 
-				loadImage(url, R.id.iv_qy_mall, view);
-				viewHolder.tv_cent.setText(infos.get(position).getScore());
-				viewHolder.tv_name.setText(infos.get(position).getName());
-				viewHolder.tv_price.setText(infos.get(position).getPrice());
-			
-			view.setOnClickListener( new View.OnClickListener() {
-				
+			ViewHolder viewHolder = null;
+			final String url = HttpUtil.URL + "/"
+					+ infos.get(position).getSrc();
+			final String flowerIds = infos.get(position).getId();
+			final String flowerPoints = infos.get(position).getScore();
+			final String flowerPrice = infos.get(position).getPrice();
+			final String flowerName = infos.get(position).getName();
+
+			view = inflater.inflate(R.layout.item_qy_mall, null);
+			viewHolder = new ViewHolder();
+			viewHolder.iv_photo = (ImageView) view
+					.findViewById(R.id.iv_qy_mall);
+			viewHolder.tv_cent = (TextView) view
+					.findViewById(R.id.tv_qy_mall_cent);
+			viewHolder.tv_name = (TextView) view
+					.findViewById(R.id.tv_qy_mall_name);
+			viewHolder.tv_price = (TextView) view
+					.findViewById(R.id.tv_qy_mall_price);
+
+			loadImage(url, R.id.iv_qy_mall, view);
+
+			viewHolder.tv_cent.setText(flowerPoints);
+			viewHolder.tv_name.setText(flowerName);
+			viewHolder.tv_price.setText(flowerPrice);
+
+			view.setOnClickListener(new View.OnClickListener() {
+
 				@Override
 				public void onClick(View v) {
-					runOnUiThread(new Runnable() {
-						public void run() {
-							Toast.makeText(QingyuanMall.this, "输入接收者id/鲜花种类/支付方式", Toast.LENGTH_LONG).show();
+					Log.d(tag, "item点击事件是否相应=======");
+
+					dia = new Dialog(QingyuanMall.this);
+					dia.requestWindowFeature(Window.FEATURE_NO_TITLE);
+					dia.show();
+					final Window wd = dia.getWindow();
+					wd.setContentView(R.layout.dialog_qy_mall);
+					TextView tv_qyMall = (TextView) wd
+							.findViewById(R.id.tv_qyMall);
+					ImageView iv_qyMall = (ImageView) wd
+							.findViewById(R.id.iv_qyMall);
+					FrameLayout frame_Cash = (FrameLayout) wd
+							.findViewById(R.id.frame_qyMallCash);
+					TextView tv_Cash = (TextView) wd
+							.findViewById(R.id.tv_qyMallCash);
+					final ImageView iv_Cash = (ImageView) wd
+							.findViewById(R.id.iv_qyMallCash);
+					FrameLayout frame_Cent = (FrameLayout) wd
+							.findViewById(R.id.frame_qyMallCent);
+					TextView tv_Cent = (TextView) wd
+							.findViewById(R.id.tv_qyMallCent);
+					final ImageView iv_Cent = (ImageView) wd
+							.findViewById(R.id.iv_qyMallCent);
+					final EditText edt_qyMall = (EditText) wd
+							.findViewById(R.id.edt_qyMall);
+					Button btn_qyMall = (Button) wd
+							.findViewById(R.id.btn_qyMall);
+
+					tv_qyMall.setText(flowerName);
+					iv_qyMall.setImageDrawable(asyncImageLoader2.loadDrawable(
+							url, new AsyncImageLoader2.ImageCallback() {
+								public void imageLoaded(Drawable imageDrawable) {
+									((ImageView) wd
+											.findViewById(R.id.iv_qyMall))
+											.setImageDrawable(imageDrawable);
+								}
+							}));
+					tv_Cash.setText("现金支付： " + flowerPrice + " 元");
+					tv_Cent.setText("积分支付： " + flowerPoints + " 分");
+					frame_Cash.setOnTouchListener(new View.OnTouchListener() {
+
+						@Override
+						public boolean onTouch(View arg0, MotionEvent event) {
+							if (event.getAction() == MotionEvent.ACTION_DOWN) {
+								iv_Cash.setImageResource(android.R.drawable.presence_online);
+								iv_Cent.setImageResource(android.R.drawable.presence_invisible);
+							}
+							payType = false;
+							return false;
+						}
+					});
+					frame_Cent.setOnTouchListener(new View.OnTouchListener() {
+
+						@Override
+						public boolean onTouch(View arg0, MotionEvent event) {
+							if (event.getAction() == MotionEvent.ACTION_DOWN) {
+								iv_Cash.setImageResource(android.R.drawable.presence_invisible);
+								iv_Cent.setImageResource(android.R.drawable.presence_online);
+							}
+							payType = true;// 赋值后，支付方式参数link为真，
+							return false;
+						}
+					});
+
+					btn_qyMall.setOnClickListener(new OnClickListener() {
+
+						@Override
+						public void onClick(View arg0) {
+							// 发送结果判断,首先判断id选了没，支付方式选了没（默认的支付方式为现金），
+							// 在判断钱包内现金/积分是否足够支付，不够则提示冲值后支付，否则直接支付
+							fuid = edt_qyMall.getText().toString().trim();
+
+							if (fuid.equals("") && fuid != null) {
+
+								Toast.makeText(QingyuanMall.this, "请输入对方ID",
+										Toast.LENGTH_SHORT).show();
+
+							} else {
+								// 发送
+
+								CustomProgressDialog.createDialog(
+										QingyuanMall.this, "提交中，请稍等。。。", 2500)
+										.show();
+
+								mn = flowerPrice;
+								ct = flowerPoints;
+								i = flowerIds;
+
+								new PayThread().start();
+
+							}
 
 						}
 					});
-					//TODO  跳入支付界面 
-					
+
 				}
 			});
+
 			return view;
 		}
 
@@ -249,22 +364,171 @@ public class QingyuanMall extends Activity {
 			List<QingyuanMall_Info> infos = (List<QingyuanMall_Info>) msg.obj;
 			if (infos != null) {
 
-					list_Infos.addAll(infos);
-				
+				list_Infos.addAll(infos);
+
 			} else {
 				// null
 			}
 			adapter_Mall.notifyDataSetChanged();
 			pullToRefreshGridView.onRefreshComplete();
-			
+
 		};
 
 	};
 
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position,
+			long ids) {
+	}
+
+	// 当前类使用的参数
+	private String moneyfloat;
+	private String cent;
+	private String jsMSG;
+
 	/**
 	 * 
-	 * @author Administrator
-	 *
+	 * @author Administrator 赠送鲜花的线程，
+	 */
+	class PayThread extends Thread {
+		@Override
+		public void run() {
+			try {
+				String url_get = HttpUtil.getRequest(HttpUtil.BASE_URL
+						+ "&toType=json&f=purse" + "&uid="
+						+ MainActivity.home_uid);
+				JSONObject js = new JSONObject(url_get);
+				jsMSG = js.getString("message");
+				JSONObject json = js.getJSONObject("result");
+				if (js.getInt("code") == 1) {
+					moneyfloat = json.getString("money");
+					cent = json.getString("points");
+				} else {
+					// 没查到
+					Log.e(tag, "余额查询失败，,,,," + jsMSG);
+				}
+			} catch (Exception e) {
+				Log.e(tag, "余额查询 exception");
+			}
+
+			if (payType) {
+				// 积分支付
+				int fp = Integer.parseInt(ct);
+				int ce = Integer.parseInt(cent);
+				if (ce >= fp) {// 可以支付
+					try {
+						String urlCent = HttpUtil.getRequest(HttpUtil.BASE_URL
+								+ "&uid=" + MainActivity.home_uid + "&fuid="
+								+ fuid + "&id=" + i
+								+ "&action=SEND&link=1&f=gift&toType=json");
+						JSONObject js = new JSONObject(urlCent);
+						jsMSG = js.getString("message");
+						if (js.getInt("code") == 1) {
+							// 发送成功（积分）,回到鲜花商城
+							runOnUiThread(new Runnable() {
+								public void run() {
+									new AlertDialog.Builder(QingyuanMall.this)
+											.setTitle("提示：").setMessage(jsMSG)
+											.setPositiveButton("确定", null)
+											.create().show();
+									dia.cancel();
+
+								}
+							});
+						} else if (js.getInt("code") == 10000) {
+							// 失败，
+							runOnUiThread(new Runnable() {
+								public void run() {
+									Toast.makeText(QingyuanMall.this,
+											"发送失败： " + jsMSG, Toast.LENGTH_LONG)
+											.show();
+								}
+							});
+						} else {
+							Log.e(tag, "积分支付结果code>10000");
+						}
+
+					} catch (Exception e) {
+						Log.e(tag, "积分支付时失败Exception");
+					}
+
+				} else {
+					// 余额不足，尝试现金支付或者签到
+					runOnUiThread(new Runnable() {
+						public void run() {
+							Toast.makeText(QingyuanMall.this, "积分不足，尝试现金支付",
+									Toast.LENGTH_LONG).show();
+							dia.cancel();
+						}
+					});
+				}
+
+			} else {
+				// 现金支付
+				float fp = Float.parseFloat(mn);
+				float mf = Float.parseFloat(moneyfloat);
+				if (mf >= fp) {
+					// 支付
+					try {
+						String urlCent = HttpUtil.getRequest(HttpUtil.BASE_URL
+								+ "&uid=" + MainActivity.home_uid + "&fuid="
+								+ fuid + "&id=" + i
+								+ "&action=SEND&f=gift&toType=json");
+						JSONObject js = new JSONObject(urlCent);
+						jsMSG = js.getString("message");
+						if (js.getInt("code") == 1) {
+							// 发送成功（积分）,回到鲜花商城
+							runOnUiThread(new Runnable() {
+								public void run() {
+									new AlertDialog.Builder(QingyuanMall.this)
+											.setTitle("提示：").setMessage(jsMSG)
+											.setPositiveButton("确定", null)
+											.create().show();
+									dia.cancel();
+
+								}
+							});
+						} else if (js.getInt("code") == 10000) {
+							// 失败，
+							runOnUiThread(new Runnable() {
+								public void run() {
+									Toast.makeText(QingyuanMall.this,
+											"发送失败： " + jsMSG, Toast.LENGTH_LONG)
+											.show();
+								}
+							});
+						} else {
+							Log.e(tag, "现金支付结果code>10000");
+						}
+
+					} catch (Exception e) {
+						Log.e(tag, "现金支付时失败Exception");
+					}
+
+				} else {
+					// 余额不足，让他冲值
+					runOnUiThread(new Runnable() {
+						public void run() {
+							Toast.makeText(QingyuanMall.this, "余额不足，请冲值后尝试",
+									Toast.LENGTH_LONG).show();
+							dia.cancel();
+						}
+					});
+				}
+
+			}
+
+		}
+
+	}
+
+	void pay() {
+
+	}
+
+	/**
+	 * 
+	 * @author Administrator 鲜花信息 价格 id 名称 ，积分值，路径地址
 	 */
 	class QingyuanMall_Info {
 		private String id;
@@ -314,4 +578,5 @@ public class QingyuanMall extends Activity {
 		}
 
 	}
+
 }

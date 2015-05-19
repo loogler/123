@@ -3,39 +3,18 @@ package com.qingyuan.activity.userdata;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
+import android.os.Bundle;
+import android.util.Log;
+import android.widget.ImageView;
+
 import com.qingyuan.R;
 import com.qingyuan.util.AsyncImageLoader2;
 import com.qingyuan.util.HttpUtil;
 
-
-
-
-
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.SharedPreferences;
-import android.content.DialogInterface.OnClickListener;
-import android.graphics.drawable.Drawable;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.View.OnTouchListener;
-import android.view.ViewGroup;
-import android.view.ViewTreeObserver.OnTouchModeChangeListener;
-import android.view.animation.Animation;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.BaseAdapter;
-import android.widget.Gallery;
-import android.widget.ImageSwitcher;
-import android.widget.ImageView;
-import android.widget.Gallery.LayoutParams;
-import android.widget.ViewSwitcher.ViewFactory;
-
-@SuppressWarnings("deprecation")
 public class SearchPerson_Photos extends Activity  {
 	private ImageView is;
 
