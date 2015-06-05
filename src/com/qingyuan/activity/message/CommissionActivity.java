@@ -48,6 +48,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.qingyuan.R;
 import com.qingyuan.activity.userdata.SearchPersonActivity;
 import com.qingyuan.util.AsyncImageLoader2;
+import com.qingyuan.util.CustomProgressDialog;
 import com.qingyuan.util.HttpUtil;
 
 /**
@@ -109,21 +110,23 @@ public class CommissionActivity extends Activity implements
 		pullListView_left.setMode(Mode.BOTH);
 		pullListView_right.setMode(Mode.BOTH);
 
-		btnLines = (ViewGroup) inflater.inflate(R.layout.aty_msg_commission, null);
+		btnLines = (ViewGroup) inflater.inflate(R.layout.aty_msg_commission,
+				null);
 		setContentView(btnLines);
 
 		btns = new Button[pageViews.size()];
 		btn_left = (Button) btnLines.findViewById(R.id.btn_left_likeraty);
 		btn_right = (Button) btnLines.findViewById(R.id.btn_right_likeraty);
-		btn_right.setText("右侧按钮");
-		btn_left.setText("左侧按钮");
+		btn_right.setText("被我委托");
+		btn_left.setText("我被委托");
 
 		btns[0] = btn_left;
 		btns[1] = btn_right;
 		btn_left.setOnClickListener(new GuideButtonClickListener(0));
 		btn_right.setOnClickListener(new GuideButtonClickListener(1));
 
-		mViewPage = (ViewPager) btnLines.findViewById(R.id.viewpager_commission);
+		mViewPage = (ViewPager) btnLines
+				.findViewById(R.id.viewpager_commission);
 		mViewPage.setAdapter(new ListViewPager());
 		mViewPage.setOnPageChangeListener(new GuidePageChangeListener());
 
@@ -296,7 +299,9 @@ public class CommissionActivity extends Activity implements
 
 				@Override
 				public void onClick(View arg0) {
-			
+					CustomProgressDialog.createDialog(CommissionActivity.this,
+							"加载中。。。", 2000).show();
+
 					String fuid = userInfoList_Get.get(position).getUid();
 					SearchPersonActivity.search_person_fuid = fuid;
 					Intent i = new Intent(CommissionActivity.this,
@@ -408,6 +413,8 @@ public class CommissionActivity extends Activity implements
 
 				@Override
 				public void onClick(View arg0) {
+					CustomProgressDialog.createDialog(CommissionActivity.this,
+							"加载中。。。", 2000).show();
 					String fuid = userInfoList_Sent.get(position).getUid();
 					SearchPersonActivity.search_person_fuid = fuid;
 					Intent i = new Intent(CommissionActivity.this,
@@ -696,10 +703,11 @@ public class CommissionActivity extends Activity implements
 
 		case 0:
 			try {
-				res = HttpUtil.getRequest(HttpUtil.BASE_URL
-						+ "&f=commission&toType=json&type=0"
-						+ "&page_size=8" + "&page=" + pageIndex_get
-						+ "&android_uid=" + home_uid);
+				res = HttpUtil
+						.getRequest(HttpUtil.BASE_URL
+								+ "&f=commission&toType=json&type=0"
+								+ "&page_size=8" + "&page=" + pageIndex_get
+								+ "&android_uid=" + home_uid);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -708,9 +716,9 @@ public class CommissionActivity extends Activity implements
 		case 1:
 			try {
 				res = HttpUtil.getRequest(HttpUtil.BASE_URL
-						+ "&f=liker&toType=json&type=1"
-						+ "&page_size=8" + "&page=" + pageIndex_sent
-						+ "&android_uid=" + home_uid);
+						+ "&f=liker&toType=json&type=1" + "&page_size=8"
+						+ "&page=" + pageIndex_sent + "&android_uid="
+						+ home_uid);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

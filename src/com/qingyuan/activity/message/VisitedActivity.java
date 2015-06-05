@@ -50,6 +50,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.qingyuan.R;
 import com.qingyuan.activity.userdata.SearchPersonActivity;
 import com.qingyuan.util.AsyncImageLoader2;
+import com.qingyuan.util.CustomProgressDialog;
 import com.qingyuan.util.HttpUtil;
 
 /**
@@ -117,8 +118,8 @@ public class VisitedActivity extends Activity implements
 		btns = new Button[pageViews.size()];
 		btn_left = (Button) btnLines.findViewById(R.id.btn_left_likeraty);
 		btn_right = (Button) btnLines.findViewById(R.id.btn_right_likeraty);
-		btn_right.setText("右侧按钮");
-		btn_left.setText("左侧按钮");
+		btn_right.setText("我被访问");
+		btn_left.setText("被我访问");
 
 		btns[0] = btn_left;
 		btns[1] = btn_right;
@@ -298,6 +299,8 @@ public class VisitedActivity extends Activity implements
 
 				@Override
 				public void onClick(View arg0) {
+					CustomProgressDialog.createDialog(VisitedActivity.this,
+							"加载中。。。", 2000).show();
 					String fuid = userInfoList_Get.get(position).getUid();
 					SearchPersonActivity.search_person_fuid = fuid;
 					Intent i = new Intent(VisitedActivity.this,
@@ -409,6 +412,8 @@ public class VisitedActivity extends Activity implements
 
 				@Override
 				public void onClick(View arg0) {
+					CustomProgressDialog.createDialog(VisitedActivity.this,
+							"加载中。。。", 2000).show();
 					String fuid = userInfoList_Sent.get(position).getUid();
 					SearchPersonActivity.search_person_fuid = fuid;
 					Intent i = new Intent(VisitedActivity.this,
@@ -587,7 +592,8 @@ public class VisitedActivity extends Activity implements
 				if (num > 0) {
 					for (int i = 0; i < num; i++) {
 						item = new UserInfo_Visited();
-						item.setFuid(arr.optJSONObject(i).getString("visitorid")); // 自己的id
+						item.setFuid(arr.optJSONObject(i)
+								.getString("visitorid")); // 自己的id
 						item.setId(arr.optJSONObject(i).getString("vid"));
 						item.setUid(arr.optJSONObject(i).getString("uid"));// 对方的id
 						long time = arr.optJSONObject(i).getInt("time");
@@ -694,10 +700,11 @@ public class VisitedActivity extends Activity implements
 
 		case 0:
 			try {
-				res = HttpUtil.getRequest(HttpUtil.BASE_URL
-						+ "&f=visited&toType=json&type=0" 
-						+ "&page_size=8" + "&page=" + pageIndex_get
-						+ "&android_uid=" + home_uid);
+				res = HttpUtil
+						.getRequest(HttpUtil.BASE_URL
+								+ "&f=visited&toType=json&type=0"
+								+ "&page_size=8" + "&page=" + pageIndex_get
+								+ "&android_uid=" + home_uid);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -706,9 +713,9 @@ public class VisitedActivity extends Activity implements
 		case 1:
 			try {
 				res = HttpUtil.getRequest(HttpUtil.BASE_URL
-						+ "&f=visited&toType=json&type=1"
-						+ "&page_size=8" + "&page=" + pageIndex_sent
-						+ "&android_uid=" + home_uid);
+						+ "&f=visited&toType=json&type=1" + "&page_size=8"
+						+ "&page=" + pageIndex_sent + "&android_uid="
+						+ home_uid);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

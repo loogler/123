@@ -20,7 +20,11 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
-
+/**
+ *  开通会员的界面
+ * @author Administrator
+ *
+ */
 public class MS_VIPActivity extends Activity implements OnClickListener{
 	public String tag = "MS_VIPActivityTAG";
 	//定义几个用到的xml布局变量
@@ -115,8 +119,8 @@ public class MS_VIPActivity extends Activity implements OnClickListener{
 				intent.setClass(getApplicationContext(), PaymentActivity.class);
 				Bundle bundle = new Bundle();
 				Order order = new Order(0,
-						Integer.parseInt(arrKeyServices[orderKey]),
-						arrServices[orderKey], "");
+						Integer.parseInt(arrServices[orderKey]),
+						arrKeyServices[orderKey], "");
 				bundle.putSerializable("order", order);
 				intent.putExtras(bundle);
 				startActivity(intent);

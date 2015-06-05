@@ -17,10 +17,10 @@ public class MyUtil {
 	
 	/**
 	 * 数组匹配取key/val
-	 * @param str
-	 * @param arrs
-	 * @param type
-	 * @return
+	 * @param str 传入的json值 ，通过json从yoghurt中心取到的
+	 * @param arrs  数组资源
+	 * @param type  type =1或者 ！=1；  等于1时  取“，”前面的，！=1 时 取“，”后面的
+	 * @return  取到的数组中指定的值。
 	 */
 	public static String getArrString(String str,String[] arrs,int type){
 		String val = type == 1 ? "不限":"0" ;
@@ -44,9 +44,10 @@ public class MyUtil {
 	
 	/**
 	 * 取数组
-	 * @param arrs
-	 * @param type
-	 * @return
+	 * @param arrs 插入的数组
+	 * @param type if =1 （arrs,"key,value"）取“,”之前的内容，//// ！=1  取 “key,value”后面的内容
+	 *   
+	 * @return  根据参数type界定后得到的数组 （键/值集合）
 	 */
 	public static String[] getArr(String[] arrs, int type){
 		String[] val = new String[arrs.length];
@@ -59,7 +60,11 @@ public class MyUtil {
 		}
 		return val;
 	}
-	
+	/**
+	 * 
+	 * @param arrs
+	 * @return 
+	 */
 	public static List<MyArray> getArrays(String[] arrs){
 		List<MyArray> val = new ArrayList<MyArray>();
 		for (int i = 0; i < arrs.length; i++) {

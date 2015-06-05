@@ -6,13 +6,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.qingyuan.activity.expand.Help;
 import com.qingyuan.activity.expand.Invitation;
 import com.qingyuan.activity.expand.QingyuanMall;
 import com.qingyuan.activity.expand.WeiBaiMall;
 import com.qingyuan.util.CustomProgressDialog;
 
 public class TabOthersActivity extends Activity implements View.OnClickListener {
-	Button btn_Mall, btn_WeiBai, btn_invitation;
+	Button btn_Mall, btn_WeiBai, btn_invitation, btn_help;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -22,10 +23,12 @@ public class TabOthersActivity extends Activity implements View.OnClickListener 
 		btn_Mall = (Button) findViewById(R.id.btn_tabothers_mall);
 		btn_WeiBai = (Button) findViewById(R.id.btn_tabothers_weibai);
 		btn_invitation = (Button) findViewById(R.id.btn_tabothers_invitation);
+		btn_help = (Button) findViewById(R.id.btn_tabothers_help);
 
 		btn_Mall.setOnClickListener(this);
 		btn_WeiBai.setOnClickListener(this);
 		btn_invitation.setOnClickListener(this);
+		btn_help.setOnClickListener(this);
 	}
 
 	@Override
@@ -51,6 +54,12 @@ public class TabOthersActivity extends Activity implements View.OnClickListener 
 					"列表获取中。。。。", 2000).show();
 			startActivity(i2);
 
+			break;
+		case R.id.btn_tabothers_help:
+			Intent i3 = new Intent(TabOthersActivity.this, Help.class);
+			CustomProgressDialog.createDialog(TabOthersActivity.this, "加载中。。",
+					2000).show();
+			startActivity(i3);
 			break;
 
 		default:

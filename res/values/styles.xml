@@ -2,13 +2,13 @@
 
     <!--
         Base application theme, dependent on API level. This theme is replaced
-        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
     -->
     <style name="AppBaseTheme" parent="Theme.AppCompat.Light">
         <!--
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
-            backward-compatibility can go here.
+            backward-compatibility can go here.
         -->
     </style>
 
@@ -40,6 +40,7 @@
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowNoTitle">true</item>
     </style>
+
     <style name="button">
         <item name="android:background">@color/red2</item>
         <item name="android:textColor">@color/white</item>
@@ -50,7 +51,8 @@
         <item name="android:paddingLeft">10dp</item>
         <item name="android:paddingRight">10dp</item>
     </style>
-    	<style name="userinfo_item_top">
+
+    <style name="userinfo_item_top">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">50dip</item>
         <item name="android:background">@drawable/tabmyself_top</item>
@@ -60,7 +62,7 @@
         <item name="android:layout_marginRight">10dip</item>
         <item name="android:clickable">true</item>
     </style>
-    
+
     <style name="userinfo_item_middle">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">50dip</item>
@@ -71,7 +73,7 @@
         <item name="android:layout_marginRight">10dip</item>
         <item name="android:clickable">true</item>
     </style>
-    
+
     <style name="userinfo_item_bottom">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">50dip</item>
@@ -82,22 +84,26 @@
         <item name="android:layout_marginRight">10dip</item>
         <item name="android:clickable">true</item>
     </style>
-    <style name="AnimBottom" parent="@android:style/Animation">  
-    	<item name="android:windowEnterAnimation">@anim/push_bottom_in</item>
+
+    <style name="AnimBottom" parent="@android:style/Animation">
+        <item name="android:windowEnterAnimation">@anim/push_bottom_in</item>
         <item name="android:windowExitAnimation">@anim/push_bottom_out</item>
-	</style>
-    
- <!--    <style name="SearchPersonActivity" parent="@android:style/Theme.Dialog"> 
+    </style>
+
+    <!--
+<style name="SearchPersonActivity" parent="@android:style/Theme.Dialog"> 
     <item name="android:windowBackground">@drawable/my_background</item> 
     <item name="android:alertDialogStyle">@style/MyOpaqueAlertDialog</item> 
-</style>  -->
- 
-<!-- <style name="SearchPersonDialog" parent="@android:style/Theme.Dialog.Alert"> 
+</style>
+    -->
+
+
+    <!--
+<style name="SearchPersonDialog" parent="@android:style/Theme.Dialog.Alert"> 
     <item name="android:background">#454545</item> 
     <item name="android:windowBackground">@drawable/my_background</item> 
     <item name="android:popupBackground">@drawable/my_background</item> 
-</style>  -->
-    
-    
+</style>
+    -->
 
 </resources>

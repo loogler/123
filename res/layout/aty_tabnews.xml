@@ -1,18 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical" >
-<com.handmark.pulltorefresh.library.PullToRefreshListView
-        android:id="@+id/pull_refresh_list"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:cacheColorHint="#00000000"
-        android:divider="#19000000"
-        android:dividerHeight="4dp"
-        android:fadingEdge="none"
-        android:fastScrollEnabled="false"
-        android:footerDividersEnabled="false"
-        android:headerDividersEnabled="false"
-        android:smoothScrollbar="true" />
-</LinearLayout>
+    android:layout_height="fill_parent" >
+
+    <com.sothree.slidinguppanel.SlidingUpPanelLayout
+        android:id="@+id/sliding_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <com.handmark.pulltorefresh.library.PullToRefreshListView
+            android:id="@+id/pull_refresh_list"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:cacheColorHint="#00000000"
+            android:divider="#19000000"
+            android:dividerHeight="4dp"
+            android:fadingEdge="none"
+            android:fastScrollEnabled="false"
+            android:footerDividersEnabled="false"
+            android:headerDividersEnabled="false"
+            android:smoothScrollbar="true" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#eee"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="68dp"
+                android:background="@drawable/searchperson_bottombutton"
+                android:gravity="center|bottom"
+                android:padding="5dp"
+                android:text="历史记录"
+                android:textSize="22sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp" >
+
+                <Button
+                    android:id="@+id/btn_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape"
+                    android:drawableLeft="@drawable/tabnews_email_history"
+                    android:drawableRight="@drawable/rightarrow"
+                    android:text="历史邮件" />
+
+                <Button
+                    android:id="@+id/btn_qiubo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape"
+                    android:drawableLeft="@drawable/tabnews_qiubo_history"
+                    android:drawableRight="@drawable/rightarrow"
+                    android:text="秋波记录" />
+
+                <Button
+                    android:id="@+id/btn_gift"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape"
+                    android:drawableLeft="@drawable/tabnews_gift_history"
+                    android:drawableRight="@drawable/rightarrow"
+                    android:text="礼物中心" />
+
+                <Button
+                    android:id="@+id/btn_liker"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape"
+                    android:drawableLeft="@drawable/tabnews_liker_history"
+                    android:drawableRight="@drawable/rightarrow"
+                    android:text="意中人" />
+
+                <Button
+                    android:id="@+id/btn_visiter"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape"
+                    android:drawableLeft="@drawable/tabnews_visiter_history"
+                    android:drawableRight="@drawable/rightarrow"
+                    android:text="浏览记录" />
+
+                <Button
+                    android:id="@+id/btn_entrust"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape"
+                    android:drawableLeft="@drawable/tabnews_entrust_history"
+                    android:drawableRight="@drawable/rightarrow"
+                    android:text="委托记录" />
+            </LinearLayout>
+        </LinearLayout>
+    </com.sothree.slidinguppanel.SlidingUpPanelLayout>
+
+</RelativeLayout>

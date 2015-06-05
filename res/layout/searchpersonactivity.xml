@@ -41,71 +41,78 @@
 
             <!-- 显示会员照片 -->
 
-            <LinearLayout
+            <RelativeLayout
+                android:id="@+id/rl_searchperson_photo"
                 style="@drawable/searchperson_photo"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:orientation="horizontal" >
+                android:layout_height="200dp"
+                android:paddingTop="60dp" >
 
                 <ImageView
                     android:id="@+id/user_pic"
-                    android:layout_width="50dp"
-                    android:layout_height="60dp"
+                    android:layout_width="70dp"
+                    android:layout_height="80dp"
+                    android:layout_alignParentBottom="true"
                     android:scaleType="fitStart"
                     android:src="@drawable/ic_launcher" />
 
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="60dp"
-                    android:layout_weight="1"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
                     android:orientation="vertical" >
 
                     <TextView
-                        android:gravity="center"
                         android:id="@+id/user_nickname"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
+                        android:gravity="center"
                         android:text="nickname"
+                        android:textColor="#f00"
                         android:textSize="16sp" />
 
                     <TextView
-                        android:gravity="center"
                         android:id="@+id/place_gender_age"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="city_gender_age" />
+                        android:gravity="center"
+                        android:text="city_gender_age"
+                        android:textColor="#f00" />
                 </LinearLayout>
-            </LinearLayout>
+                <!-- 显示会员相册 -->
+
+            </RelativeLayout>
             <!-- 显示会员资料 -->
+
+            <HorizontalScrollView
+                android:id="@+id/horizontalScrollView1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/black" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <com.qingyuan.modem.photo.NoScrollGridView
+                        android:id="@+id/grid"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:horizontalSpacing="5dp"
+                        android:numColumns="auto_fit"
+                        android:stretchMode="columnWidth"
+                        android:verticalSpacing="1dp" />
+                </LinearLayout>
+            </HorizontalScrollView>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical" >
-
-                <!-- 显示会员相册 -->
-
-                <HorizontalScrollView
-                    android:id="@+id/horizontalScrollView1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="80dp" >
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="fill_parent"
-                        android:layout_margin="10dp" >
-
-                        <GridView
-                            android:id="@+id/grid"
-                            android:layout_width="fill_parent"
-                            android:layout_height="fill_parent"
-                            android:gravity="center"
-                            android:numColumns="auto_fit"
-                            android:stretchMode="spacingWidthUniform" >
-                        </GridView>
-                    </LinearLayout>
-                </HorizontalScrollView>
 
                 <!-- 内心独白 -->
 
@@ -298,6 +305,20 @@
         android:background="#949494"
         android:orientation="horizontal"
         android:padding="5dp" >
+        
+        <TextView
+            android:id="@+id/chat"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/searchperson_bottombutton"
+            android:gravity="center_horizontal"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:text="聊天"
+            android:textColor="@color/red2"
+            android:textSize="16dp"
+            />
 
         <TextView
             android:id="@+id/qiubo"
@@ -308,7 +329,8 @@
             android:gravity="center_horizontal"
             android:paddingBottom="5dp"
             android:paddingTop="5dp"
-            android:text="发送秋波"
+            android:text="秋波"
+            android:textColor="@color/red2"
             android:textSize="16dp" />
 
         <TextView
@@ -321,7 +343,9 @@
             android:paddingBottom="5dp"
             android:paddingTop="5dp"
             android:text="加意中人"
-            android:textSize="16dp" />
+            android:textColor="@color/red2"
+            android:textSize="16dp"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/entrust"
@@ -333,7 +357,9 @@
             android:paddingBottom="5dp"
             android:paddingTop="5dp"
             android:text="委托红娘"
-            android:textSize="16dp" />
+            android:textColor="@color/red2"
+            android:textSize="16dp"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/more"
@@ -344,7 +370,8 @@
             android:gravity="center_horizontal"
             android:paddingBottom="5dp"
             android:paddingTop="5dp"
-            android:text="更多。。"
+            android:text="更多 >"
+            android:textColor="@color/red2"
             android:textSize="16dp" />
     </LinearLayout>
 

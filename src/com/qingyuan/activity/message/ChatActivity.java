@@ -415,7 +415,7 @@ public class ChatActivity extends Activity implements View.OnClickListener {
 	 */
 	private void initViewPager() {
 
-		mFaceMap = Chat_EmotionApplication.getInstance().getFaceMap();
+		mFaceMap = Chat_Emotion.getFaceMap();
 		Set<String> keySet = mFaceMap.keySet();
 		mKeyList = new ArrayList<String>();
 		mKeyList.addAll(keySet);

@@ -15,8 +15,8 @@
 
         <ImageView
             android:id="@+id/iv_recent_avatar"
-            android:layout_width="75dp"
-            android:layout_height="90dp"
+            android:layout_width="55dp"
+            android:layout_height="70dp"
             android:scaleType="fitXY"
             android:layout_gravity="center_vertical"
             android:layout_alignParentLeft="true"

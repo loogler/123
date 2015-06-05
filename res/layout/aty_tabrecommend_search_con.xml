@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <!-- 可以下拉的区域 -->
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <!-- 第一行表格 -->
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:padding="10dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="性别"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/genderText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:drawableRight="@drawable/rightarrow"
+                    android:text="女士"
+                    android:textSize="18sp" />
+            </FrameLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1sp"
+                android:background="@color/gray3" />
+            <!-- 第二行表格 -->
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:padding="10dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="年龄"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/ageText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:drawableRight="@drawable/rightarrow"
+                    android:text="不限"
+                    android:textSize="18sp" />
+            </FrameLayout>
+
+          <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1sp"
+                android:background="@color/gray3" />
+            <!-- 第三行表格 -->
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:padding="10dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="学历"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/educationText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:drawableRight="@drawable/rightarrow"
+                    android:text="不限"
+                    android:textSize="18sp" />
+            </FrameLayout>
+
+           <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1sp"
+                android:background="@color/gray3" />
+
+            <!-- 第四行表格 -->
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:padding="10dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="地区"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/pcText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:drawableRight="@drawable/rightarrow"
+                    android:text="不限"
+                    android:textSize="18sp" />
+            </FrameLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1sp"
+                android:background="@color/gray3" />
+            <!-- 第五行表格 -->
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:padding="10dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="月均收入"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/salaryText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:drawableRight="@drawable/rightarrow"
+                    android:text="不限"
+                    android:textSize="18sp" />
+            </FrameLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1sp"
+                android:background="@color/gray3" />
+
+            <!-- 第六行表格 -->
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:padding="10dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="婚姻状况"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/marriageText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:drawableRight="@drawable/rightarrow"
+                    android:text="不限"
+                    android:textSize="18sp" />
+            </FrameLayout>
+
+           <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1sp"
+                android:background="@color/gray3" />
+
+            <!-- 第七行表格 -照片 -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <CheckBox
+                    android:id="@+id/checkbox_photo_able"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="有无照片 " />
+            </LinearLayout>
+
+            <!-- 第八行表格  按钮 -->
+
+            <LinearLayout
+                android:id="@+id/layout_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <Button
+                    android:id="@+id/button_search_widely"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5sp"
+                    android:layout_weight="1"
+                    android:text="开始条件搜索"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

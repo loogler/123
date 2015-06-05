@@ -194,6 +194,9 @@ public class PaymentActivity extends Activity {
 									@Override
 									public void onClick(DialogInterface arg0,
 											int arg1) {
+										Toast.makeText(PaymentActivity.this,
+												"恭喜！请等待后台确认操作。",
+												Toast.LENGTH_SHORT).show();
 										PaymentActivity.this.finish();
 									}
 								})

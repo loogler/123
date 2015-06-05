@@ -29,7 +29,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -51,7 +53,7 @@ import com.qingyuan.util.CustomProgressDialog;
 import com.qingyuan.util.HttpUtil;
 
 public class TabNewsActivity extends Activity implements
-		OnRefreshListener<ListView> {
+		OnRefreshListener<ListView>, OnClickListener {
 	private static final String tag = "TabNewsActivity";
 
 	private PullToRefreshListView pullListView;
@@ -60,7 +62,10 @@ public class TabNewsActivity extends Activity implements
 
 	private String home_uid;
 	private Message msg;
-	
+
+	// 定义几个button 用来加载历史记录
+	private Button btn_email, btn_qiubo, btn_gift, btn_liker, btn_visiter,
+			btn_entrust;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +74,18 @@ public class TabNewsActivity extends Activity implements
 		SharedPreferences sp = getSharedPreferences("userInfo",
 				Activity.MODE_PRIVATE);
 		home_uid = sp.getString("uid", null);
+		btn_email = (Button) findViewById(R.id.btn_email);
+		btn_qiubo = (Button) findViewById(R.id.btn_qiubo);
+		btn_gift = (Button) findViewById(R.id.btn_gift);
+		btn_liker = (Button) findViewById(R.id.btn_liker);
+		btn_visiter = (Button) findViewById(R.id.btn_visiter);
+		btn_entrust = (Button) findViewById(R.id.btn_entrust);
+		btn_email.setOnClickListener(this);
+		btn_qiubo.setOnClickListener(this);
+		btn_gift.setOnClickListener(this);
+		btn_liker.setOnClickListener(this);
+		btn_visiter.setOnClickListener(this);
+		btn_entrust.setOnClickListener(this);
 
 		pullListView = (PullToRefreshListView) findViewById(R.id.pull_refresh_list);
 		adapter_ListNews = new ListDataAdapter_News(this, userInfoList_News);
@@ -142,8 +159,34 @@ public class TabNewsActivity extends Activity implements
 					.findViewById(R.id.tv_recent_time);
 			viewHoler.tv_recent_unread = (TextView) view
 					.findViewById(R.id.tv_recent_unread);
+			if (userInfoList_News.get(position).getMsgTag().equals("会员邮件")) {
+				viewHoler.iv_recent_avatar
+						.setImageResource(R.drawable.tabnews_useremail);
+			} else if (userInfoList_News.get(position).getMsgTag()
+					.equals("红娘邮件")) {
+				viewHoler.iv_recent_avatar
+						.setImageResource(R.drawable.tabnews_qingyuanmail);
+			} else if (userInfoList_News.get(position).getMsgTag().equals("访问")) {
+				viewHoler.iv_recent_avatar
+						.setImageResource(R.drawable.tabnews_visit);
+			} else if (userInfoList_News.get(position).getMsgTag().equals("聊天")) {
 
-			loadImage(url, R.id.iv_recent_avatar, view);
+				loadImage(url, R.id.iv_recent_avatar, view);
+			} else if (userInfoList_News.get(position).getMsgTag().equals("委托")) {
+				viewHoler.iv_recent_avatar
+						.setImageResource(R.drawable.tabnews_entrust);
+			} else if (userInfoList_News.get(position).getMsgTag().equals("秋波")) {
+				viewHoler.iv_recent_avatar
+						.setImageResource(R.drawable.tabnews_qiubo);
+			} else if (userInfoList_News.get(position).getMsgTag().equals("礼物")) {
+				viewHoler.iv_recent_avatar
+						.setImageResource(R.drawable.tabnews_gift);
+			} else if (userInfoList_News.get(position).getMsgTag()
+					.equals("意中人")) {
+				viewHoler.iv_recent_avatar
+						.setImageResource(R.drawable.tabnews_like);
+			}
+
 			viewHoler.tv_recent_msg.setText(userInfoList_News.get(position)
 					.getContent());
 			viewHoler.tv_recent_name.setText(userInfoList_News.get(position)
@@ -178,8 +221,8 @@ public class TabNewsActivity extends Activity implements
 					} else if (userInfoList_News.get(position).getMsgTag()
 							.equals("聊天")) {
 
-						ChatActivity.talk_fuid = userInfoList_News.get(
-								position).getFuid();
+						ChatActivity.talk_fuid = userInfoList_News
+								.get(position).getFuid();
 						ChatActivity.talk_nickname = userInfoList_News.get(
 								position).getFuser_nickname();
 
@@ -385,7 +428,6 @@ public class TabNewsActivity extends Activity implements
 		 * @param res
 		 * @return
 		 */
-		@SuppressWarnings("null")
 		@SuppressLint({ "SimpleDateFormat", "HandlerLeak" })
 		public List<UserInfo_News> parserLiker(String res) {
 			List<UserInfo_News> items = new ArrayList<TabNewsActivity.UserInfo_News>();
@@ -534,8 +576,9 @@ public class TabNewsActivity extends Activity implements
 						item.setFuser_pic(arr.optJSONObject(i)
 								.getJSONObject("user").getString("pic"));
 						long time = arr.optJSONObject(i).getInt("time");
-						item.setFuser_nickname(arr.optJSONObject(i).getString("nickname"));
-						
+						item.setFuser_nickname(arr.optJSONObject(i).getString(
+								"nickname"));
+
 						item.setTime(sdf.format(time * 1000));
 						items.add(item);
 
@@ -636,6 +679,59 @@ public class TabNewsActivity extends Activity implements
 	public void onRefresh(PullToRefreshBase<ListView> refreshView) {
 		userInfoList_News.clear();
 		loadData(0);
+	}
+
+	/************************** gorgeous spilt line ************************************/
+	// 用户 的历史记录选择
+
+	@Override
+	public void onClick(View arg0) {
+		switch (arg0.getId()) {
+		case R.id.btn_email:
+			CustomProgressDialog.createDialog(TabNewsActivity.this, "加载中。。。",
+					2000).show();
+			Intent t1 = new Intent(TabNewsActivity.this, EmailActivity.class);
+			startActivity(t1);
+			break;
+		case R.id.btn_qiubo:
+			CustomProgressDialog.createDialog(TabNewsActivity.this, "加载中。。。",
+					2000).show();
+
+			Intent t2 = new Intent(TabNewsActivity.this, LeerActivity.class);
+			startActivity(t2);
+			break;
+		case R.id.btn_gift:
+			CustomProgressDialog.createDialog(TabNewsActivity.this, "加载中。。。",
+					2000).show();
+
+			Intent t3 = new Intent(TabNewsActivity.this, GiftActivity.class);
+			startActivity(t3);
+			break;
+		case R.id.btn_liker:
+			CustomProgressDialog.createDialog(TabNewsActivity.this, "加载中。。。",
+					2000).show();
+
+			Intent t4 = new Intent(TabNewsActivity.this, LikerActivity.class);
+			startActivity(t4);
+			break;
+		case R.id.btn_visiter:
+			CustomProgressDialog.createDialog(TabNewsActivity.this, "加载中。。。",
+					2000).show();
+
+			Intent t5 = new Intent(TabNewsActivity.this, VisitedActivity.class);
+			startActivity(t5);
+			break;
+		case R.id.btn_entrust:
+			CustomProgressDialog.createDialog(TabNewsActivity.this, "加载中。。。",
+					2000).show();
+
+			Intent t6 = new Intent(TabNewsActivity.this,
+					CommissionActivity.class);
+			startActivity(t6);
+			break;
+		default:
+			break;
+		}
 	}
 
 }

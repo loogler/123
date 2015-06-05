@@ -50,7 +50,7 @@ public class LoginActivity extends Activity {
    public void onCreate(Bundle savedInstanceState)  {  
        super.onCreate(savedInstanceState);
        requestWindowFeature(Window.FEATURE_NO_TITLE);
-       setContentView(R.layout.loginactivity); 
+       setContentView(R.layout.aty_loginactivity); 
        try {
 			String pkName = this.getPackageName();
 			String versionName = this.getPackageManager().getPackageInfo(

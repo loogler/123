@@ -21,9 +21,11 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
+import com.qingyuan.activity.userdata.SearchActivity;
 import com.qingyuan.activity.userdata.SearchPersonActivity;
 import com.qingyuan.listadapter_view.L_Search;
 import com.qingyuan.service.parser.XMLParser_Search;
@@ -52,6 +54,8 @@ public class TabRecommendActivity extends Activity implements
 	private int pageIndex = 1;// 加载的页面的页码
 	private Message msg;// 向Handler发送的消息
 	String httpUrl, home_uid;
+	
+	private TextView search;//搜索框
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -62,6 +66,7 @@ public class TabRecommendActivity extends Activity implements
 				Activity.MODE_PRIVATE);
 		home_uid = preferences.getString("uid", "0");
 		httpUrl = preferences.getString("search_url", "");
+		search=(TextView) findViewById(R.id.tv_tabrecommend_search);
 
 		mPullDownView = (PullDownView) findViewById(R.id.pull_down_view);
 		mPullDownView.setOnPullDownListener(this);
@@ -73,6 +78,14 @@ public class TabRecommendActivity extends Activity implements
 		mPullDownView.enableAutoFetchMore(true, 1);
 
 		loadData(0);
+		search.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				Intent i=new Intent(TabRecommendActivity.this,SearchActivity.class);
+				startActivity(i);
+			}
+		});
 	}// onCreate(Bundle savedInstanceState)括号的另一边
 
 	/************************* 请×××叫×××我×××分×××割×××线 *************************/

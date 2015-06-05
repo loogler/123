@@ -44,6 +44,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.qingyuan.R;
 import com.qingyuan.util.AsyncImageLoader2;
+import com.qingyuan.util.CustomProgressDialog;
 import com.qingyuan.util.HttpUtil;
 
 public class EmailQingYuanActivity extends Activity implements
@@ -153,6 +154,8 @@ public class EmailQingYuanActivity extends Activity implements
 
 				@Override
 				public void onClick(View arg0) {
+					CustomProgressDialog.createDialog(EmailQingYuanActivity.this,
+							"加载中。。。", 2000).show();
 					String messageId = userInfoList_Get.get(position).getId();
 					Intent i = new Intent(EmailQingYuanActivity.this, EmailContentActivity.class);
 					

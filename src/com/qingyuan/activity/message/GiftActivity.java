@@ -50,6 +50,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.qingyuan.R;
 import com.qingyuan.activity.userdata.SearchPersonActivity;
 import com.qingyuan.util.AsyncImageLoader2;
+import com.qingyuan.util.CustomProgressDialog;
 import com.qingyuan.util.HttpUtil;
 
 /**
@@ -117,15 +118,15 @@ public class GiftActivity extends Activity implements
 		btns = new Button[pageViews.size()];
 		btn_left = (Button) btnLines.findViewById(R.id.btn_left_likeraty);
 		btn_right = (Button) btnLines.findViewById(R.id.btn_right_likeraty);
-		btn_right.setText("右侧按钮");
-		btn_left.setText("左侧按钮");
+		btn_right.setText("我收到的");
+		btn_left.setText("我送出的");
 
 		btns[0] = btn_left;
 		btns[1] = btn_right;
 		btn_left.setOnClickListener(new GuideButtonClickListener(0));
 		btn_right.setOnClickListener(new GuideButtonClickListener(1));
 
-		mViewPage = (ViewPager) btnLines.findViewById(R.id.viewpager_liker);
+		mViewPage = (ViewPager) btnLines.findViewById(R.id.viewpager_gift);
 		mViewPage.setAdapter(new ListViewPager());
 		mViewPage.setOnPageChangeListener(new GuidePageChangeListener());
 
@@ -287,8 +288,8 @@ public class GiftActivity extends Activity implements
 					.findViewById(R.id.tv_recent_time);
 
 			loadImage(url, R.id.iv_recent_avatar, view);
-			viewHoler.tv_recent_msg.setText("第"+userinfos.get(position)
-					.getReceivenum()+"送礼给TA");
+			viewHoler.tv_recent_msg.setText("第"
+					+ userinfos.get(position).getReceivenum() + "次收到礼物");
 			viewHoler.tv_recent_name.setText(userinfos.get(position)
 					.getUser_nickname());
 			viewHoler.tv_recent_time
@@ -298,6 +299,8 @@ public class GiftActivity extends Activity implements
 
 				@Override
 				public void onClick(View arg0) {
+					CustomProgressDialog.createDialog(GiftActivity.this,
+							"加载中。。。", 2000).show();
 					String fuid = userInfoList_Get.get(position).getUid();
 					SearchPersonActivity.search_person_fuid = fuid;
 					Intent i = new Intent(GiftActivity.this,
@@ -397,8 +400,8 @@ public class GiftActivity extends Activity implements
 					.findViewById(R.id.tv_recent_time);
 
 			loadImage(url, R.id.iv_recent_avatar, view);
-			viewHoler.tv_recent_msg.setText("第"+userinfos.get(position)
-					.getReceivenum()+"次向您送礼");
+			viewHoler.tv_recent_msg.setText("第"
+					+ userinfos.get(position).getReceivenum() + "次送礼给TA");
 			viewHoler.tv_recent_name.setText(userinfos.get(position)
 					.getUser_nickname());
 			viewHoler.tv_recent_time
@@ -409,6 +412,8 @@ public class GiftActivity extends Activity implements
 
 				@Override
 				public void onClick(View arg0) {
+					CustomProgressDialog.createDialog(GiftActivity.this,
+							"加载中。。。", 2000).show();
 					String fuid = userInfoList_Sent.get(position).getUid();
 					SearchPersonActivity.search_person_fuid = fuid;
 					Intent i = new Intent(GiftActivity.this,
@@ -461,7 +466,7 @@ public class GiftActivity extends Activity implements
 		private String user_nickname;
 		private String user_pic;
 		private String user_info;
-		private String receivenum;//发送次数。
+		private String receivenum;// 发送次数。
 
 		public String getFuid() {
 			return fuid;
@@ -603,11 +608,17 @@ public class GiftActivity extends Activity implements
 						item.setUid(arr.optJSONObject(i).getString("uid"));// 对方的id
 						long time = arr.optJSONObject(i).getInt("cdate");
 						item.setCdate(sdf.format(time * 1000));
-						item.setReceivenum(arr.optJSONObject(i).getString("receivenum"));
+						item.setReceivenum(arr.optJSONObject(i).getString(
+								"receivenum"));
 
 						JSONObject user = arr.optJSONObject(i).getJSONObject(
 								"user");
-						item.setUser_nickname(user.getString("nickname"));
+						if (user.getString("nickname") != null) {
+
+							item.setUser_nickname(user.getString("nickname"));
+						}else {
+							item.setUser_nickname(user.getString("uid"));
+						}
 						item.setUser_pic(user.getString("pic"));
 
 						String province = null, city = null, age;
@@ -706,10 +717,12 @@ public class GiftActivity extends Activity implements
 
 		case 0:
 			try {
-				res = HttpUtil.getRequest(HttpUtil.BASE_URL
-						+ "&f=gift&toType=json&type=1"
-						+ "&page_size=8" + "&page=" + pageIndex_get
-						+ "&android_uid=" + home_uid);
+				// 收到的礼物
+				res = HttpUtil
+						.getRequest(HttpUtil.BASE_URL
+								+ "&f=gift&toType=json&type=1" + "&page_size=8"
+								+ "&page=" + pageIndex_get + "&android_uid="
+								+ home_uid);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -717,10 +730,11 @@ public class GiftActivity extends Activity implements
 			break;
 		case 1:
 			try {
+				// 送出的礼物
 				res = HttpUtil.getRequest(HttpUtil.BASE_URL
-						+ "&f=gift&toType=json&type=0"
-						+ "&page_size=8" + "&page=" + pageIndex_sent
-						+ "&android_uid=" + home_uid);
+						+ "&f=gift&toType=json&type=0" + "&page_size=8"
+						+ "&page=" + pageIndex_sent + "&android_uid="
+						+ home_uid);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

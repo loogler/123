@@ -48,6 +48,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.qingyuan.R;
 import com.qingyuan.activity.userdata.SearchPersonActivity;
 import com.qingyuan.util.AsyncImageLoader2;
+import com.qingyuan.util.CustomProgressDialog;
 import com.qingyuan.util.HttpUtil;
 
 /**
@@ -109,14 +110,14 @@ public class LikerActivity extends Activity implements
 		pullListView_left.setMode(Mode.BOTH);
 		pullListView_right.setMode(Mode.BOTH);
 
-		btnLines = (ViewGroup) inflater.inflate(R.layout.likeractivity, null);
+		btnLines = (ViewGroup) inflater.inflate(R.layout.aty_msg_likeractivity, null);
 		setContentView(btnLines);
 
 		btns = new Button[pageViews.size()];
 		btn_left = (Button) btnLines.findViewById(R.id.btn_left_likeraty);
 		btn_right = (Button) btnLines.findViewById(R.id.btn_right_likeraty);
-		btn_right.setText("右侧按钮");
-		btn_left.setText("左侧按钮");
+		btn_right.setText("被我加过");
+		btn_left.setText("我被加过");
 
 		btns[0] = btn_left;
 		btns[1] = btn_right;
@@ -296,6 +297,8 @@ public class LikerActivity extends Activity implements
 
 				@Override
 				public void onClick(View arg0) {
+					CustomProgressDialog.createDialog(LikerActivity.this,
+							"加载中。。。", 2000).show();
 					String fuid = userInfoList_Get.get(position).getUid();
 					SearchPersonActivity.search_person_fuid = fuid;
 					Intent i = new Intent(LikerActivity.this,
@@ -407,6 +410,8 @@ public class LikerActivity extends Activity implements
 
 				@Override
 				public void onClick(View arg0) {
+					CustomProgressDialog.createDialog(LikerActivity.this,
+							"加载中。。。", 2000).show();
 					String fuid = userInfoList_Sent.get(position).getUid();
 					SearchPersonActivity.search_person_fuid = fuid;
 					Intent i = new Intent(LikerActivity.this,

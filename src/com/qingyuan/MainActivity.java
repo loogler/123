@@ -50,7 +50,7 @@ public class MainActivity extends Activity {
 
 	private LinearLayout feedbackLayout; // 意见反馈VIEW
 	public static String home_nickname, home_uid, home_gender, check_date,
-			home_pic;// 用户资料
+			home_pic,home_cid;// 用户资料
 			// private boolean is_check;// 检查更新，何时检查
 	private User user;// User 类的实例化
 
@@ -148,6 +148,7 @@ public class MainActivity extends Activity {
 		home_uid = preferences.getString("uid", "");
 		home_gender = preferences.getString("gender", "");
 		// is_check = preferences.getBoolean("ischeck", false);
+		home_cid=preferences.getString("cid", null);
 		check_date = preferences.getString("checkdate", null);
 		user = new User();
 		user.formatUserFromPreferences(preferences);

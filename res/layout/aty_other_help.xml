@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <LinearLayout
+            android:id="@+id/linearLayout1"
+            android:layout_width="fill_parent"
+            android:layout_height="140sp"
+            android:background="@drawable/help_background"
+            android:orientation="horizontal" >
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/linearLayout1"
+            android:layout_margin="10sp"
+            android:background="@drawable/shape"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="22dp"
+                android:text="如果您有中意的会员，请点击该会员资料中委托红娘取得帮助" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/llll"
+            android:layout_margin="10sp"
+            android:background="@drawable/shape" >
+
+            <TextView
+                android:id="@+id/tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="22dp"
+                android:text="您还可以通过拨打情缘热线与我们联系" />
+
+            <!-- 专线一 -->
+
+            <TextView
+                android:id="@+id/zhuanxian1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/tv"
+                android:text="情缘专线1: "
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/zhuanxian1"
+                android:autoLink="phone"
+                android:gravity="right"
+                android:text="4008007529"
+                android:textSize="25sp" />
+            <!-- 专线二 -->
+
+            <TextView
+                android:id="@+id/zhuanxian2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/textView1"
+                android:text="情缘专线2: "
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/zhuanxian2"
+                android:autoLink="phone"
+                android:gravity="right"
+                android:text="4001607919"
+                android:textSize="25sp" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/relativeLayout1"
+            android:layout_margin="10sp"
+            android:background="@drawable/shape"
+            android:gravity="center_horizontal"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="22dp"
+                android:text="您还可以通过微信扫描二维码或者直接输入平台账号关注微信公众平台" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="情缘网微信账号：www07919com" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/help_weixin" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/linearLayout1"
+            android:layout_below="@+id/ll"
+            android:layout_marginLeft="10sp"
+            android:orientation="vertical"
+            android:paddingBottom="40dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="温馨提示："
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="2dp"
+                android:text="1 您在情缘网遇到的任何问题都可以向红娘求助"
+                android:textColor="@color/grey" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="2dp"
+                android:text="2 来电仅收取当地标准的市话费，无附加费用"
+                android:textColor="@color/grey" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="2dp"
+                android:text="3 如果您在情缘网有红娘为您服务，请准确提供红娘工号"
+                android:textColor="@color/grey" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="2dp"
+                android:text="4 工作时间   9:00-21:00"
+                android:textColor="@color/grey" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</ScrollView>

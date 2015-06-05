@@ -27,12 +27,14 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,6 +43,9 @@ import com.qingyuan.PaymentActivity;
 import com.qingyuan.R;
 import com.qingyuan.activity.expand.QingyuanMall;
 import com.qingyuan.activity.message.ChatActivity;
+import com.qingyuan.modem.photo.ImagePagerActivity;
+import com.qingyuan.modem.photo.MyGridAdapter;
+import com.qingyuan.modem.photo.NoScrollGridView;
 import com.qingyuan.service.parser.MyAction;
 import com.qingyuan.service.parser.MyUtil;
 import com.qingyuan.util.AsyncImageLoader2;
@@ -59,8 +64,8 @@ public class SearchPersonActivity extends Activity {
 	// 2. search_person_fuid进入个人主页提交参数，
 	public static String search_person_fuid;
 	// 3. 定义相册图片的url
-	private String imageUrl[] = new String[20];
 	private int imagenum = 0;
+	private String imageUrl[];
 	// 實例化圖片加載类
 	private AsyncImageLoader2 asyncImageLoader2 = new AsyncImageLoader2();
 	// 4.. 发委托
@@ -73,10 +78,10 @@ public class SearchPersonActivity extends Activity {
 			user_school, user_occupation, love_state, identity_check,
 			email_check, tel_check, introduce, user_income, user_marry,
 			user_child, user_house, user_vehicle, user_constellation,
-			user_nation, user_home, user_weight, user_body, qiubo, like,
-			entrust, more;
+			user_nation, user_home, user_weight, user_body, qiubo, chat, more;
+	private RelativeLayout rl_photo;
 
-	private GridView grid;// 照片相册
+	private NoScrollGridView grid;// 照片相册gridView=(NoScrollGridView)
 	private ImageView user_pic;// 头像
 	// 6. 这些个textView需要赋值时用到的变量
 	private String memberText1, user_nickname1, user_age1, user_birthyear1,
@@ -93,7 +98,7 @@ public class SearchPersonActivity extends Activity {
 	String msgLeer;
 	private String[] arrServices, arrKeyServices;
 	int orderKey;
-	private String[] items = new String[] { "发送邮件", "赠送礼物", "在线聊天" };
+	private String[] items = new String[] { "发送邮件", "赠送礼物", "加意中人", "委托红娘" };
 	LinearLayout layoutEmail;
 
 	@Override
@@ -115,54 +120,6 @@ public class SearchPersonActivity extends Activity {
 		// Log.i("loadData", "加载了loaddata");
 		loadData();
 
-		// 发送委托的按钮
-		entrust.setOnClickListener(new Button.OnClickListener() {
-			public void onClick(View v) {
-				// 详见http://www.oschina.net/question/54100_32486
-				final TableLayout commissionLayout = (TableLayout) getLayoutInflater()
-						.inflate(R.layout.searchperson_entrust, null);
-				new AlertDialog.Builder(SearchPersonActivity.this)
-						.setTitle("发送委托").setView(commissionLayout)
-						.setPositiveButton("提交", new OnClickListener() {
-
-							@Override
-							public void onClick(DialogInterface dialog,
-									int which) {
-								EditText sendContent = (EditText) commissionLayout
-										.findViewById(R.id.commission_content);
-								final String commissionContent = sendContent
-										.getText().toString().trim();
-								SearchPersonActivity.this
-										.runOnUiThread(new Runnable() {
-
-											@Override
-											public void run() {
-												showMsg = MyAction.sendCommission(
-														Integer.parseInt(home_uid),
-														Integer.parseInt(search_person_fuid),
-														commissionContent);
-
-												if (showMsg == null) {
-													showMsg = "发送成功！";
-												}
-												Toast.makeText(
-														SearchPersonActivity.this,
-														showMsg,
-														Toast.LENGTH_LONG)
-														.show();
-											}
-										});
-							}
-						}).setNegativeButton("取消", null).create().show();
-			}
-		});
-
-		// 意中人
-		like.setOnClickListener(new Button.OnClickListener() {
-			public void onClick(View v) {
-				liker_send();
-			}
-		});
 		// 暗送秋波
 		qiubo.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
@@ -283,6 +240,30 @@ public class SearchPersonActivity extends Activity {
 				}).start();
 			}
 		});
+
+		chat.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				int s_cid = user.getScid();
+				if (s_cid < 40) {
+					ChatActivity.talk_fuid = search_person_fuid;
+					ChatActivity.talk_nickname = user_nickname1;
+
+					Intent intent1 = new Intent(SearchPersonActivity.this,
+							ChatActivity.class);
+					startActivity(intent1);
+				} else {
+					new AlertDialog.Builder(SearchPersonActivity.this)
+							.setMessage("您不是高级会员，不能发起在线聊天")
+							.setPositiveButton("确定", null)
+
+							.show();
+				}
+
+			}
+		});
+
 		more.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -358,118 +339,58 @@ public class SearchPersonActivity extends Activity {
 											QingyuanMall.class);
 									startActivity(intent);
 									break;
-
 								case 2:
-									int s_cid = user.getScid();
-									if (s_cid < 40) {
-										ChatActivity.talk_fuid = search_person_fuid;
-										ChatActivity.talk_nickname = user_nickname1;
+									// 意中人
+									liker_send();
+									break;
+								case 3:
 
-										Intent intent1 = new Intent(
-												SearchPersonActivity.this,
-												ChatActivity.class);
-										startActivity(intent1);
-									} else {
-										new AlertDialog.Builder(
-												SearchPersonActivity.this)
-												.setMessage("您不能发起在线聊天，要升级会员吗？")
-												.setPositiveButton("确定",
-														new OnClickListener() {
-															@Override
-															public void onClick(
-																	DialogInterface dialog,
-																	int which) {
-																int s_cid = user
-																		.getScid();
-																if (s_cid > 0
-																		&& s_cid < 40) {
-																	arrServices = MyUtil
-																			.getArr(getResources()
-																					.getStringArray(
-																							R.array.renewalservice),
-																					1);
-																	arrKeyServices = MyUtil
-																			.getArr(getResources()
-																					.getStringArray(
-																							R.array.renewalservice),
-																					0);
-																} else {
-																	arrServices = MyUtil
-																			.getArr(getResources()
-																					.getStringArray(
-																							R.array.service),
-																					1);
-																	arrKeyServices = MyUtil
-																			.getArr(getResources()
-																					.getStringArray(
-																							R.array.service),
-																					0);
-																}
-																String[] itemArr = new String[arrServices.length];
-																for (int i = 0; i < arrServices.length; i++) {
-																	String a = "/3个月";
-																	if (i == 1)
-																		a = "/6个月";
-																	else if (i == 2) {
-																		a = "/1个月";
-																	}
-																	itemArr[i] = arrServices[i]
-																			+ a
-																			+ " "
-																			+ arrKeyServices[i]
-																			+ "元";
-																}
-																new AlertDialog.Builder(
-																		SearchPersonActivity.this)
-																		.setTitle(
-																				"购买服务")
-																		.setSingleChoiceItems(
-																				itemArr,
-																				0,
-																				new OnClickListener() {
+									final TableLayout commissionLayout = (TableLayout) getLayoutInflater()
+											.inflate(
+													R.layout.searchperson_entrust,
+													null);
+									new AlertDialog.Builder(
+											SearchPersonActivity.this)
+											.setTitle("发送委托")
+											.setView(commissionLayout)
+											.setPositiveButton("提交",
+													new OnClickListener() {
 
-																					@Override
-																					public void onClick(
-																							DialogInterface dialog,
-																							int which) {
-																						orderKey = which;
-																					}
-																				})
-																		.setPositiveButton(
-																				"立即购买",
-																				new OnClickListener() {
+														@Override
+														public void onClick(
+																DialogInterface dialog,
+																int which) {
+															EditText sendContent = (EditText) commissionLayout
+																	.findViewById(R.id.commission_content);
+															final String commissionContent = sendContent
+																	.getText()
+																	.toString()
+																	.trim();
+															SearchPersonActivity.this
+																	.runOnUiThread(new Runnable() {
 
-																					@Override
-																					public void onClick(
-																							DialogInterface dialog,
-																							int which) {
-																						Intent intent = new Intent();
-																						intent.setClass(
-																								SearchPersonActivity.this,
-																								PaymentActivity.class);
-																						Bundle bundle = new Bundle();
-																						Order order = new Order(
-																								0,
-																								Integer.parseInt(arrKeyServices[orderKey]),
-																								arrServices[orderKey],
-																								"");
-																						bundle.putSerializable(
-																								"order",
-																								order);
-																						intent.putExtras(bundle);
-																						startActivity(intent);
-																					}
-																				})
-																		.setNegativeButton(
-																				"取消",
-																				null)
-																		.create()
-																		.show();
-															}
-														})
-												.setNegativeButton("取消", null)
-												.show();
-									}
+																		@Override
+																		public void run() {
+																			showMsg = MyAction
+																					.sendCommission(
+																							Integer.parseInt(home_uid),
+																							Integer.parseInt(search_person_fuid),
+																							commissionContent);
+
+																			if (showMsg == null) {
+																				showMsg = "发送成功！";
+																			}
+																			Toast.makeText(
+																					SearchPersonActivity.this,
+																					showMsg,
+																					Toast.LENGTH_LONG)
+																					.show();
+																		}
+																	});
+														}
+													})
+											.setNegativeButton("取消", null)
+											.create().show();
 									break;
 
 								}
@@ -511,11 +432,11 @@ public class SearchPersonActivity extends Activity {
 		//
 		introduce = (TextView) findViewById(R.id.introduce);// 内心独白
 		qiubo = (TextView) findViewById(R.id.qiubo);// 秋波
-		like = (TextView) findViewById(R.id.like);// 意中人
-		entrust = (TextView) findViewById(R.id.entrust);// 委托
+		chat = (TextView) findViewById(R.id.chat);
 		more = (TextView) findViewById(R.id.more);// 其他
 		//
-		grid = (GridView) findViewById(R.id.grid);// 照片展示
+		grid = (NoScrollGridView) findViewById(R.id.grid);// 照片展示
+		rl_photo = (RelativeLayout) findViewById(R.id.rl_searchperson_photo);
 
 	}
 
@@ -525,7 +446,8 @@ public class SearchPersonActivity extends Activity {
 	 * */
 	@SuppressLint("SimpleDateFormat")
 	private void loadData() {
-		String url = HttpUtil.BASE_URL + "&toType=json&f=space&fuid="
+		String url = HttpUtil.BASE_URL
+				+ "&toType=json&f=space&fuid="
 				+ search_person_fuid + "&android_uid=" + home_uid;
 		try {
 			String res = HttpUtil.getRequest(url);
@@ -553,8 +475,10 @@ public class SearchPersonActivity extends Activity {
 				// 性别
 				if (user.getInt("gender") == 1) {
 					user_gender1 = "女";
+					rl_photo.setBackgroundResource(R.drawable.searchperson_rlback1);
 				} else {
 					user_gender1 = "男";
+					rl_photo.setBackgroundResource(R.drawable.searchperson_rlback0);
 				}
 				// 获取爱情状态
 				love_state1 = user.getString("love_status");// 对于偶尔出现的cer空字段，直接忽略处理，不再显示
@@ -784,21 +708,48 @@ public class SearchPersonActivity extends Activity {
 					introduce1 = "未填写";
 				}
 
-				ImgItem item = null;
-				List<ImgItem> items = new ArrayList<SearchPersonActivity.ImgItem>();
 				JSONArray arr = user.getJSONArray("pics");
+				imageUrl = new String[arr.length()];
 				for (int i = 0; i < arr.length(); i++) {
-					imageUrl[i] = arr.optJSONObject(i).getString("imgurl");
-					item = new ImgItem();
-					item.setImgUrl(imageUrl[i]);
-					items.add(item);
+					imageUrl[i] = HttpUtil.URL + "/"
+							+ arr.optJSONObject(i).getString("imgurl");
+
 				}
-				int size = items.size();
+				int size = imageUrl.length;
 				Log.i(tag, "item.size()" + size);
 				int length = 100;
 
+				DisplayMetrics dm = new DisplayMetrics();
+				getWindowManager().getDefaultDisplay().getMetrics(dm);
+				float density = dm.density;
+				int gridviewWidth = (int) (size * (length + 4) * density);
+				int itemWidth = (int) (length * density);
+
+				LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+						gridviewWidth, LinearLayout.LayoutParams.FILL_PARENT);
+				grid.setLayoutParams(params);
+				grid.setColumnWidth(itemWidth);
+
+				grid.setHorizontalSpacing(5);
+				grid.setStretchMode(GridView.NO_STRETCH);
+				grid.setVerticalScrollBarEnabled(true);
+				grid.setNumColumns(size);
+				grid.setAdapter(new MyGridAdapter(imageUrl,
+						SearchPersonActivity.this));
+				grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+					@Override
+					public void onItemClick(AdapterView<?> parent, View view,
+							int position, long id) {
+						imageBrower(position, imageUrl);
+					}
+				});
 				/*
-				 * DisplayMetrics dm = new DisplayMetrics();
+				 * int size = items.size(); Log.i(tag, "item.size()" + size);
+				 * int length = 100;
+				 * 
+				 * 
+				 * 被舍弃的原先照片预览页 DisplayMetrics dm = new DisplayMetrics();
 				 * getWindowManager().getDefaultDisplay().getMetrics(dm); float
 				 * density = dm.density; int gridviewWidth = (int) (size *
 				 * (length + 4) * density); int itemWidth = (int) (length *
@@ -808,13 +759,24 @@ public class SearchPersonActivity extends Activity {
 				 * LinearLayout.LayoutParams( gridviewWidth,
 				 * LinearLayout.LayoutParams.FILL_PARENT);
 				 * grid.setLayoutParams(params); grid.setColumnWidth(itemWidth);
+				 * 
+				 * grid.setHorizontalSpacing(5);
+				 * grid.setStretchMode(GridView.NO_STRETCH);
+				 * grid.setVerticalScrollBarEnabled(true);
+				 * grid.setNumColumns(size); GridViewAdapter ada = new
+				 * GridViewAdapter( SearchPersonActivity.this, imgs);
+				 * grid.setAdapter(ada); ada.notifyDataSetChanged();
+				 * grid.setOnItemClickListener(new
+				 * AdapterView.OnItemClickListener() {
+				 * 
+				 * @Override public void onItemClick(AdapterView<?> arg0, View
+				 * view, int position, long arg3) { imageBrower(position,
+				 * imgs.toArray(new String[imgs.size()]));
+				 * 
+				 * }
+				 * 
+				 * });
 				 */
-				grid.setHorizontalSpacing(5);
-				grid.setStretchMode(GridView.NO_STRETCH);
-				grid.setNumColumns(size);
-				GridViewAdapter ada = new GridViewAdapter(
-						SearchPersonActivity.this, items);
-				grid.setAdapter(ada);
 
 				// 获取头像资源
 				user_pic.setVisibility(View.VISIBLE);
@@ -848,23 +810,13 @@ public class SearchPersonActivity extends Activity {
 
 	}
 
-	/**
-	 * 照片路径
-	 * 
-	 * @author Administrator
-	 *
-	 */
-	class ImgItem {
-		private String ImgUrl;
-
-		public String getImgUrl() {
-			return ImgUrl;
-		}
-
-		public void setImgUrl(String imgUrl) {
-			ImgUrl = imgUrl;
-		}
-
+	private void imageBrower(int position, String[] urls) {
+		Intent intent = new Intent(SearchPersonActivity.this,
+				ImagePagerActivity.class);
+		// 图片url,为了演示这里使用常量，一般从数据库中或网络中获取
+		intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_URLS, urls);
+		intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX, position);
+		startActivity(intent);
 	}
 
 	/**
@@ -876,12 +828,13 @@ public class SearchPersonActivity extends Activity {
 
 	public class GridViewAdapter extends BaseAdapter {
 		Context context;
-		List<ImgItem> list;
+		List<String> list;
 		LayoutInflater inflater;
 
-		public GridViewAdapter(Context _context, List<ImgItem> _list) {
+		public GridViewAdapter(Context _context, List<String> _list) {
 			this.list = _list;
 			this.context = _context;
+			inflater = LayoutInflater.from(context);
 
 		}
 
@@ -908,19 +861,22 @@ public class SearchPersonActivity extends Activity {
 					R.layout.item_searchperson_photos, null);
 			ImageView iv_photo = (ImageView) convertView
 					.findViewById(R.id.iv_serchperson_photos);
-			String imgs = HttpUtil.URL + "/" + list.get(position).getImgUrl();
+			final String imgs = HttpUtil.URL + "/" + list.get(position);
 			loadImage(imgs, R.id.iv_serchperson_photos, convertView);
-			convertView.setOnClickListener(new View.OnClickListener() {
-
-				@Override
-				public void onClick(View arg0) {
-					Toast.makeText(getApplicationContext(),
-							"第" + position + "张", Toast.LENGTH_SHORT).show();
-				}
-			});
-
+			//
+			/*
+			 * final String [] abc=new String[list.size()];
+			 * convertView.setOnClickListener(new View.OnClickListener() {
+			 * 
+			 * @Override public void onClick(View arg0) {
+			 * Toast.makeText(getApplicationContext(), "第" + position + "张",
+			 * Toast.LENGTH_SHORT).show();
+			 * 
+			 * imageBrower(position, imgs, list.toArray(abc)); } });
+			 */
 			return convertView;
 		}
+
 	}
 
 	/**
@@ -928,9 +884,9 @@ public class SearchPersonActivity extends Activity {
 	 * */
 	private void entity() {
 		// 向textview添加数据
-		user_nickname.setText(user_nickname1);
+		user_nickname.setText(user_nickname1 + "(" + home_uid + ")");
 		user_height.setText("身高：" + user_height1);
-		user_school.setText("学历" + user_school1);
+		user_school.setText("学历: " + user_school1);
 		user_occupation.setText("职业：" + user_occupation1);
 		user_marry.setText("婚姻状况：" + user_marry1);
 		user_vehicle.setText("购车情况：" + user_vehicle1);

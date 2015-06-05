@@ -35,8 +35,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -49,8 +47,8 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.qingyuan.R;
-import com.qingyuan.activity.userdata.SearchPersonActivity;
 import com.qingyuan.util.AsyncImageLoader2;
+import com.qingyuan.util.CustomProgressDialog;
 import com.qingyuan.util.HttpUtil;
 
 /**
@@ -112,14 +110,15 @@ public class EmailActivity extends Activity implements
 		pullListView_left.setMode(Mode.BOTH);
 		pullListView_right.setMode(Mode.BOTH);
 
-		btnLines = (ViewGroup) inflater.inflate(R.layout.aty_msg_email_user, null);
+		btnLines = (ViewGroup) inflater.inflate(R.layout.aty_msg_email_user,
+				null);
 		setContentView(btnLines);
 
 		btns = new Button[pageViews.size()];
 		btn_left = (Button) btnLines.findViewById(R.id.btn_left_likeraty);
 		btn_right = (Button) btnLines.findViewById(R.id.btn_right_likeraty);
-		btn_right.setText("右侧按钮");
-		btn_left.setText("左侧按钮");
+		btn_right.setText("发送的");
+		btn_left.setText("收到的");
 
 		btns[0] = btn_left;
 		btns[1] = btn_right;
@@ -286,7 +285,6 @@ public class EmailActivity extends Activity implements
 					.findViewById(R.id.tv_recent_msg);
 			viewHoler.tv_recent_time = (TextView) view
 					.findViewById(R.id.tv_recent_time);
-
 			loadImage(url, R.id.iv_recent_avatar, view);
 			viewHoler.tv_recent_msg.setText(userinfos.get(position)
 					.getUser_info());
@@ -299,19 +297,22 @@ public class EmailActivity extends Activity implements
 
 				@Override
 				public void onClick(View arg0) {
+					CustomProgressDialog.createDialog(EmailActivity.this,
+							"加载中。。。", 2000).show();
 					String messageId = userInfoList_Get.get(position).getId();
-					Intent i = new Intent(EmailActivity.this, EmailContentActivity.class);
-					
+					Intent i = new Intent(EmailActivity.this,
+							EmailContentActivity.class);
+
 					Bundle bundle = new Bundle();
-					bundle.putSerializable("messageId", (Serializable) messageId);
+					bundle.putSerializable("messageId",
+							(Serializable) messageId);
 					i.putExtras(bundle);
 					startActivity(i);
 				}
-				
+
 			});
 			return view;
 		}
-		
 
 		/**
 		 * 
@@ -406,19 +407,23 @@ public class EmailActivity extends Activity implements
 					.getTitle());
 			viewHoler.tv_recent_name.setText(userInfoList_Get.get(position)
 					.getUser_nickname());
-			viewHoler.tv_recent_time
-					.setText(userInfoList_Get.get(position).getCdate());
+			viewHoler.tv_recent_time.setText(userInfoList_Get.get(position)
+					.getCdate());
 
 			view.setTag(viewHoler);
 			view.setOnClickListener(new View.OnClickListener() {
 
 				@Override
 				public void onClick(View arg0) {
+					CustomProgressDialog.createDialog(EmailActivity.this,
+							"加载中。。。", 2000).show();
 					String messageId = userInfoList_Sent.get(position).getId();
-					Intent i = new Intent(EmailActivity.this, EmailContentActivity.class);
-					
+					Intent i = new Intent(EmailActivity.this,
+							EmailContentActivity.class);
+
 					Bundle bundle = new Bundle();
-					bundle.putSerializable("messageId", (Serializable) messageId);
+					bundle.putSerializable("messageId",
+							(Serializable) messageId);
 					i.putExtras(bundle);
 					startActivity(i);
 				}
@@ -605,8 +610,8 @@ public class EmailActivity extends Activity implements
 						item = new UserInfo_Liker();
 						item.setFuid(arr.optJSONObject(i).getString("uid")); // 自己的id
 						item.setId(arr.optJSONObject(i).getString("id"));
-						item.setIs_read(arr.optJSONObject(i).getString(
-								"status"));
+						item.setIs_read(arr.optJSONObject(i)
+								.getString("status"));
 						item.setUid(arr.optJSONObject(i).getString("fuid"));// 对方的id
 						long time = arr.optJSONObject(i).getInt("cdate");
 						item.setCdate(sdf.format(time * 1000));
@@ -713,10 +718,11 @@ public class EmailActivity extends Activity implements
 
 		case 0:
 			try {
-				res = HttpUtil.getRequest(HttpUtil.BASE_URL
-						+ "&f=email&toType=json&type=1"
-						+ "&page_size=8" + "&page=" + pageIndex_get
-						+ "&android_uid=" + home_uid);
+				res = HttpUtil
+						.getRequest(HttpUtil.BASE_URL
+								+ "&f=email&toType=json&type=1"
+								+ "&page_size=8" + "&page=" + pageIndex_get
+								+ "&android_uid=" + home_uid);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -725,9 +731,9 @@ public class EmailActivity extends Activity implements
 		case 1:
 			try {
 				res = HttpUtil.getRequest(HttpUtil.BASE_URL
-						+ "&f=email&toType=json&type=3"
-						+ "&page_size=8" + "&page=" + pageIndex_sent
-						+ "&android_uid=" + home_uid);
+						+ "&f=email&toType=json&type=3" + "&page_size=8"
+						+ "&page=" + pageIndex_sent + "&android_uid="
+						+ home_uid);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

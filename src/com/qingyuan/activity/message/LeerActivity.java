@@ -48,6 +48,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.qingyuan.R;
 import com.qingyuan.activity.userdata.SearchPersonActivity;
 import com.qingyuan.util.AsyncImageLoader2;
+import com.qingyuan.util.CustomProgressDialog;
 import com.qingyuan.util.HttpUtil;
 
 /**
@@ -109,14 +110,14 @@ public class LeerActivity extends Activity implements
 		pullListView_left.setMode(Mode.BOTH);
 		pullListView_right.setMode(Mode.BOTH);
 
-		btnLines = (ViewGroup) inflater.inflate(R.layout.leeractivity, null);
+		btnLines = (ViewGroup) inflater.inflate(R.layout.aty_msg_leeractivity, null);
 		setContentView(btnLines);
 
 		btns = new Button[pageViews.size()];
 		btn_left = (Button) btnLines.findViewById(R.id.btn_left_likeraty);
 		btn_right = (Button) btnLines.findViewById(R.id.btn_right_likeraty);
-		btn_right.setText("右侧按钮");
-		btn_left.setText("左侧按钮");
+		btn_right.setText("发送的");
+		btn_left.setText("收到的");
 
 		btns[0] = btn_left;
 		btns[1] = btn_right;
@@ -296,6 +297,8 @@ public class LeerActivity extends Activity implements
 
 				@Override
 				public void onClick(View arg0) {
+					CustomProgressDialog.createDialog(LeerActivity.this,
+							"加载中。。。", 2000).show();
 					String fuid = userInfoList_Get.get(position).getUid();
 					SearchPersonActivity.search_person_fuid = fuid;
 					Intent i = new Intent(LeerActivity.this,
@@ -407,6 +410,8 @@ public class LeerActivity extends Activity implements
 
 				@Override
 				public void onClick(View arg0) {
+					CustomProgressDialog.createDialog(LeerActivity.this,
+							"加载中。。。", 2000).show();
 					String fuid = userInfoList_Sent.get(position).getUid();
 					SearchPersonActivity.search_person_fuid = fuid;
 					Intent i = new Intent(LeerActivity.this,
@@ -588,8 +593,8 @@ public class LeerActivity extends Activity implements
 						item = new UserInfo_Liker();
 						item.setFuid(arr.optJSONObject(i).getString("fuid")); // 自己的id
 						item.setId(arr.optJSONObject(i).getString("id"));
-						item.setIs_read(arr.optJSONObject(i).getString(
-								"status"));
+						item.setIs_read(arr.optJSONObject(i)
+								.getString("status"));
 						item.setUid(arr.optJSONObject(i).getString("uid"));// 对方的id
 						long time = arr.optJSONObject(i).getInt("cdate");
 						item.setCdate(sdf.format(time * 1000));
